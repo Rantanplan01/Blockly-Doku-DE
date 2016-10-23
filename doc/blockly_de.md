@@ -11,10 +11,17 @@
         - [Kommentar](#kommentar)
         - [Steuere State](#steuere-state)
         - [Aktualisiere State](#aktualisiere-state)
+<<<<<<< HEAD
         - [Binde States](#binde-states)
         - [Schreibe States](#schreibe-states)
         - [Erzeuge State](#erzeuge-state)
         - [Wert von Objekt ID](#wert-von-objekt-id)
+=======
+        - [Bind states](#bind-states)
+        - [Write states](#write-states)
+        - [Create state](#create-state)
+        - [Get value of state](#get-value-of-state)
+>>>>>>> refs/remotes/Homoran/master
         - [Get Object ID](#get-object-id)
     - [Aktionsblöcke](#aktionsblöcke)
         - [Exec - Kommando](#exec---kommando)

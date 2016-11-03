@@ -11,10 +11,10 @@
         - [Kommentar](#kommentar)
         - [Steuere State](#steuere-state)
         - [Aktualisiere State](#aktualisiere-state)
-        - [Bind states](#bind-states)
-        - [Write states](#write-states)
-        - [Create state](#create-state)
-        - [Get value of state](#get-value-of-state)
+        - [Binde States](#binde-states)
+        - [Schreibe States](#schreibe-states)
+        - [Erzeuge State](#erzeuge-state)
+        - [Wert von Objekt ID](#wert-von-objekt-id)
         - [Get Object ID](#get-object-id)
     - [Aktionsblöcke](#aktionsblöcke)
         - [Exec - Kommando](#exec---kommando)
@@ -405,11 +405,11 @@ Beispiel zum importieren:
 ## Systemblöcke
 
 ### Debug Ausgabe
-![Debug output](img/system_debug_en.png)
+![Debug output](img/img_de\system_debug_de.png)
 
 Dieser Block macht nichts, außer eine Zeile ins log zu schreiben. Man kann ihn zum debuggen des Scripts nutzen, wie diesen hier:
 
-![Debug output](img/system_debug_1_en.png)
+![Debug output](img/img_de/system_debug_1_de.png)
 
 
 &nbsp;
@@ -454,7 +454,7 @@ Man kann 4 verschiedene Schweregrade für die Nachrichten definieren:
 
 &nbsp;
 ### Kommentar
-![Comment](img/system_comment_en.png)
+![Comment](img/img_de/system_comment_de.png)
 
 Einen Kommentar zum Skript hinzufügen um es später besser verstehen zu können.
 
@@ -463,7 +463,7 @@ Der Block macht gar nichts, es ist nur ein Kommentar.
 
 &nbsp;
 ### Steuere State
-![Control state](img/system_control_en.png)
+![Control state](img/img_de/system_control_de.png)
 
 Man kann einen Zustand auf zwei verschiedene Arten schreiben:
 - Um etwas zu steuern und den Wert an die Hardware zu schicken (Dieser Block)
@@ -473,7 +473,7 @@ Man kann einen Zustand auf zwei verschiedene Arten schreiben:
 &nbsp;
 Typische Anwendung dieses Blocks:
 
-![Control state](img/system_control_sample1_en.png)
+![Control state](img/img_de/system_control_sample1_de.png)
 
 Die Object ID wird im Dialog ausgewählt der zu sendende Wert muss angegeben werden. Abhängig vom Typ des Datenpunkts kann der Wert vom Typ [string](#string-value), [number](#number-value) oder [boolean](#ogical-value-trueflase) sein.
 
@@ -485,7 +485,7 @@ Wenn die Verzögerung nicht 0 ist, wird der Zustand nicht sofort, sondern erst n
 Man kann alle anderen Verzögerungen für diesen Datenpunkt löschen, indem man die Checkbox anhakt.
 
 So wird in dem folgenden Beispiel der Datenpunkt "Licht" nur einmal geschaltet (nach 2 Sekunden):
-![Control state](img/system_control_1_en.png)
+![Control state](img/img_de/system_control_1_de.png)
 
 
 &nbsp;
@@ -528,7 +528,7 @@ Beispiel zum importieren:
 ```
 
 Im Gegensatz zu dem vorherigen Beispiel wird der Zustand von "Licht" in dem folgenden Beispiel zweimal geschaltet(nach 1 Sekunde und nach 2 Sekunden):
-![Control state](img/system_control_2_en.png)
+![Control state](img/img_de/system_control_2_de.png)
 
 ```
 <xml xmlns="http://www.w3.org/1999/xhtml">
@@ -569,24 +569,25 @@ Im Gegensatz zu dem vorherigen Beispiel wird der Zustand von "Licht" in dem folg
 
 &nbsp;
 ### Aktualisiere State
-![Update state](img/system_update_en.png)
+![Update state](img/img_de/system_update_de.png)
 
 Dieser Block ist ähnlich dem [Steuere Block](#steuere-state), aber er setzt nur den aktuellen Wert. Es wird kein Befehl zum steuern der Hardware gesendet.
 
+
 Typische Anwendung dieses Blocks:
 
-![Update state](img/system_update_sample_en.png)
+![Update state](img/img_de/system_update_sample_de.png)
 
 
 &nbsp;
-### Bind States
-![Bind state](img/system_bind_en.png)
+### Binde States
+![Bind state](img/img_de/system_bind_de.png)
 
 Dieser Block bindet zwei Zustände aneinander.
 
 Man kann das gleiche mit diesen Blöcken erreichen:
 
-![Bind state](img/system_bind_1_en.png)
+![Bind state](img/img_de/system_bind_1_de.png)
 
 Man kann auswählen, ob der Wert nur weitergeleitet wird,  wenn sich die Quelle ändert, oder bei jeder Aktualisierung.
 
@@ -620,36 +621,33 @@ Beispiel zum importieren:
 
 
 &nbsp;
-### Write states
-![Write state](img/system_write_en.png)
+### Schreibe States
+![Write state](img/img_de/system_write_de.png)
 
-Universal write block that can do the same as ["Update state"](#update-state) and ["Control state"](#control-state) together. 
+Dies ist ein universeller Block zum schreiben von Zuständen, indem er das slebe macht, wie ["Aktualisiere State"](#aktualisiere-state) and ["Steuere State"](#steuere-state) zusammen. 
 
-But in compare with them you can define Object ID and delay with other blocks to make your script more universal.
+Aber im Vergleich dazu kann man die Objekt ID und die Verzögerung über andere Blöcke definieren um das Skript universeller zu gestalten.
 
-### Create state
-![Create state](img/system_create_en.png)
-There are two types of variables that can be created in scripts:
-- local [variables](#set-variables-value)
-- global variables or states. 
 
-Global states are visible in all scripts, but local are visible only in this current script.
+&nbsp;
+### Erzeuge State
+![Create state](img/img_de/system_create_de.png)
 
-Global states can be used in vis, mobile and all other logic or visualisation modules, can be logged into db or whatever.
+Es gibt zwei verschiedene Arten von Variablen, die mit diesem Block erzeugt werden können:
+- lokale [Variablen](#set-variables-value)
+- globale Variablen oder Zustände. 
 
-This block creates global state and if the state yet exist, the command will be ignored. You can safely call this block by every start of the script.
+Globale Zustände sind in allen Skripts sichtbar, während lokale nur in dem aktuellen Skript gültig sind.
 
-<<<<<<< HEAD
+Global Zustände können in vis, mobile und allen anderen Logik- oder Visualisierungsmodulen genutz werden, sie können gelogged werden in Datenbanken oder wo auch immer.
+
 Dieser Block erzeugt globale Zustände und wenn dieser bereits existiert wird der Befehl ignoriert. Daher kann dieser Block ohne Risiko zu jedem Skriptstart verwendet werden.
 
 
 &nbsp;
 Typische Anwendung dieses Blocks:
-=======
-Typical usage example:
->>>>>>> parent of ab7fb3b... Update blockly_de.md
 
-![Create state](img/system_create_sample1_en.png)
+![Create state](img/img_de/system_create_sample1_de.png)
 
 ```
 <xml xmlns="http://www.w3.org/1999/xhtml">
@@ -699,14 +697,13 @@ Typical usage example:
 </xml>
 ```
 
-Man kann den neu erzeugten State bereits in dem Block sekber nutzen. 
+Man kann den neu erzeugten State bereits in dem Block selber nutzen. 
 
 Der folgende Code gibt bei der ersten Ausführung einen Fehler aus, weil'subscribe' für "myState" das Objekt nicht finden kann:
  
-![Create state](img/system_create_sample2_en.png)
+![Create state](img/img_de/system_create_sample2_de.png)
 
 Bei der zweiten Ausführung wird keine Fehler ausgegeben, weil der Datenpunkt jetzt existiert.
-
 
 &nbsp;
 ### Wert von Objekt ID

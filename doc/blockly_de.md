@@ -405,11 +405,11 @@ Beispiel zum importieren:
 ## Systemblöcke
 
 ### Debug Ausgabe
-![Debug output](img/img_de\system_debug_de.png)
+![Debug output](img/system_debug_de.png)
 
 Dieser Block macht nichts, außer eine Zeile ins log zu schreiben. Man kann ihn zum debuggen des Scripts nutzen, wie diesen hier:
 
-![Debug output](img/img_de/system_debug_1_de.png)
+![Debug output](img/system_debug_1_de.png)
 
 
 &nbsp;
@@ -454,7 +454,7 @@ Man kann 4 verschiedene Schweregrade für die Nachrichten definieren:
 
 &nbsp;
 ### Kommentar
-![Comment](img/img_de/system_comment_de.png)
+![Comment](img/system_comment_de.png)
 
 Einen Kommentar zum Skript hinzufügen um es später besser verstehen zu können.
 
@@ -463,7 +463,7 @@ Der Block macht gar nichts, es ist nur ein Kommentar.
 
 &nbsp;
 ### Steuere State
-![Control state](img/img_de/system_control_de.png)
+![Control state](img/system_control_de.png)
 
 Man kann einen Zustand auf zwei verschiedene Arten schreiben:
 - Um etwas zu steuern und den Wert an die Hardware zu schicken (Dieser Block)
@@ -473,7 +473,7 @@ Man kann einen Zustand auf zwei verschiedene Arten schreiben:
 &nbsp;
 Typische Anwendung dieses Blocks:
 
-![Control state](img/img_de/system_control_sample1_de.png)
+![Control state](img/system_control_sample1_de.png)
 
 Die Object ID wird im Dialog ausgewählt der zu sendende Wert muss angegeben werden. Abhängig vom Typ des Datenpunkts kann der Wert vom Typ [string](#string-value), [number](#number-value) oder [boolean](#ogical-value-trueflase) sein.
 
@@ -485,7 +485,7 @@ Wenn die Verzögerung nicht 0 ist, wird der Zustand nicht sofort, sondern erst n
 Man kann alle anderen Verzögerungen für diesen Datenpunkt löschen, indem man die Checkbox anhakt.
 
 So wird in dem folgenden Beispiel der Datenpunkt "Licht" nur einmal geschaltet (nach 2 Sekunden):
-![Control state](img/img_de/system_control_1_de.png)
+![Control state](img/system_control_1_de.png)
 
 
 &nbsp;
@@ -528,7 +528,7 @@ Beispiel zum importieren:
 ```
 
 Im Gegensatz zu dem vorherigen Beispiel wird der Zustand von "Licht" in dem folgenden Beispiel zweimal geschaltet(nach 1 Sekunde und nach 2 Sekunden):
-![Control state](img/img_de/system_control_2_de.png)
+![Control state](img/system_control_2_de.png)
 
 ```
 <xml xmlns="http://www.w3.org/1999/xhtml">
@@ -569,25 +569,25 @@ Im Gegensatz zu dem vorherigen Beispiel wird der Zustand von "Licht" in dem folg
 
 &nbsp;
 ### Aktualisiere State
-![Update state](img/img_de/system_update_de.png)
+![Update state](img/system_update_de.png)
 
 Dieser Block ist ähnlich dem [Steuere Block](#steuere-state), aber er setzt nur den aktuellen Wert. Es wird kein Befehl zum steuern der Hardware gesendet.
 
 
 Typische Anwendung dieses Blocks:
 
-![Update state](img/img_de/system_update_sample_de.png)
+![Update state](img/system_update_sample_de.png)
 
 
 &nbsp;
 ### Binde States
-![Bind state](img/img_de/system_bind_de.png)
+![Bind state](img/system_bind_de.png)
 
 Dieser Block bindet zwei Zustände aneinander.
 
 Man kann das gleiche mit diesen Blöcken erreichen:
 
-![Bind state](img/img_de/system_bind_1_de.png)
+![Bind state](img/system_bind_1_de.png)
 
 Man kann auswählen, ob der Wert nur weitergeleitet wird,  wenn sich die Quelle ändert, oder bei jeder Aktualisierung.
 
@@ -622,7 +622,7 @@ Beispiel zum importieren:
 
 &nbsp;
 ### Schreibe States
-![Write state](img/img_de/system_write_de.png)
+![Write state](img/system_write_de.png)
 
 Dies ist ein universeller Block zum schreiben von Zuständen, indem er das slebe macht, wie ["Aktualisiere State"](#aktualisiere-state) and ["Steuere State"](#steuere-state) zusammen. 
 
@@ -631,7 +631,7 @@ Aber im Vergleich dazu kann man die Objekt ID und die Verzögerung über andere 
 
 &nbsp;
 ### Erzeuge State
-![Create state](img/img_de/system_create_de.png)
+![Create state](img/system_create_de.png)
 
 Es gibt zwei verschiedene Arten von Variablen, die mit diesem Block erzeugt werden können:
 - lokale [Variablen](#set-variables-value)
@@ -647,7 +647,7 @@ Dieser Block erzeugt globale Zustände und wenn dieser bereits existiert wird de
 &nbsp;
 Typische Anwendung dieses Blocks:
 
-![Create state](img/img_de/system_create_sample1_de.png)
+![Create state](img/system_create_sample1_de.png)
 
 ```
 <xml xmlns="http://www.w3.org/1999/xhtml">
@@ -701,7 +701,7 @@ Man kann den neu erzeugten State bereits in dem Block selber nutzen.
 
 Der folgende Code gibt bei der ersten Ausführung einen Fehler aus, weil'subscribe' für "myState" das Objekt nicht finden kann:
  
-![Create state](img/img_de/system_create_sample2_de.png)
+![Create state](img/system_create_sample2_de.png)
 
 Bei der zweiten Ausführung wird keine Fehler ausgegeben, weil der Datenpunkt jetzt existiert.
 

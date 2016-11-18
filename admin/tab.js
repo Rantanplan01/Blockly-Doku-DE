@@ -150,7 +150,7 @@ function Scripts(main) {
                 }
             }).keyup(function (e) {
                 $(this).trigger('change');
-                if (e.keyCode == 13) $('#script-group-button-save').trigger('click');
+                if (e.keyCode === 13) $('#script-group-button-save').trigger('click');
             });
         }
 
@@ -517,6 +517,12 @@ function Scripts(main) {
 
             $('.script-edit').show();
 
+            if (id.match(/^script\.js\.global/)) {
+                $('#global_hint').show();
+            } else {
+                $('#global_hint').hide();
+            }
+
             $('#edit-script-group').val(getGroup(id));
 
             $('#edit-script-name').val(obj.common.name);
@@ -683,11 +689,11 @@ function Scripts(main) {
         for (var t = 0; t < that.main.instances.length; t++) {
             if (that.main.objects[that.main.instances[t]] && that.main.objects[that.main.instances[t]].common && that.main.objects[that.main.instances[t]].common.engineTypes) {
                 var engineTypes = that.main.objects[that.main.instances[t]].common.engineTypes;
-                if (typeof engineTypes == 'string') {
-                    if (_engines.indexOf(engineTypes) == -1) _engines.push(engineTypes);
+                if (typeof engineTypes === 'string') {
+                    if (_engines.indexOf(engineTypes) === -1) _engines.push(engineTypes);
                 } else {
                     for (var z = 0; z < engineTypes.length; z++) {
-                        if (_engines.indexOf(engineTypes[z]) == -1) _engines.push(engineTypes[z]);
+                        if (_engines.indexOf(engineTypes[z]) === -1) _engines.push(engineTypes[z]);
                     }
                 }
             }
@@ -1052,13 +1058,13 @@ function Scripts(main) {
         confirmed.push(id);
         // find all elements
         for (var l = 0; l < that.list.length; l++) {
-            if (that.list[l].substring(0, id.length + 1) == id + '.') {
+            if (that.list[l].substring(0, id.length + 1) === id + '.') {
                 deleteId(that.list[l], id, confirmed);
                 return;
             }
         }
         for (var g = 0; g < that.groups.length; g++) {
-            if (that.groups[g].substring(0, id.length + 1) == id + '.') {
+            if (that.groups[g].substring(0, id.length + 1) === id + '.') {
                 deleteId(that.groups[g], id, confirmed);
                 return;
             }
@@ -1129,10 +1135,10 @@ function Scripts(main) {
             // collect all elements to rename
             // find all elements
             for (var l = 0; l < that.list.length; l++) {
-                if (that.list[l].substring(0, id.length + 1) == id + '.') _list.push(that.list[l]);
+                if (that.list[l].substring(0, id.length + 1) === id + '.') _list.push(that.list[l]);
             }
             for (var g = 0; g < that.groups.length; g++) {
-                if (that.groups[g].substring(0, id.length + 1) == id + '.') _list.push(that.list[l]);
+                if (that.groups[g].substring(0, id.length + 1) === id + '.') _list.push(that.list[l]);
             }
 
             that.main.socket.emit('getObject', id, function (err, obj) {
@@ -1431,6 +1437,38 @@ function Scripts(main) {
         that.$dialogExport.dialog('open');
     }
 
+    function loadScripts(scripts, callback) {
+        if (!scripts || !scripts.length) {
+            return callback();
+        }
+        var adapter = scripts.pop();
+        $.getScript('../../adapter/' + adapter + '/blockly.js', function (/*data, textStatus, jqxhr*/) {
+            setTimeout(function () {
+                loadScripts(scripts, callback);
+            }, 0);
+        }).fail(function (jqxhr, settings, exception) {
+            console.warn('cannot load ' + '../../adapter/' + adapter + '/blockly.js: ' + exception);
+            setTimeout(function () {
+                loadScripts(scripts, callback);
+            }, 0);
+        });
+    }
+
+    function loadCustomBlockly(callback) {
+        // get all adapters, that can have blockly
+        var toLoad = [];
+        for (var id in that.main.objects) {
+            if (!that.main.objects.hasOwnProperty(id) || !that.main.objects[id]) continue;
+            if (!id.match(/^system\.adapter\./)) continue;
+            if (that.main.objects[id].type !== 'adapter') continue;
+            if (that.main.objects[id].common && that.main.objects[id].common.blockly) {
+                toLoad.push(that.main.objects[id].common.name);
+            }
+        }
+
+        loadScripts(toLoad, callback);
+    }
+
     this.init = function (update) {
         var that = this;
         if (!this.main.objectsLoaded || !this.languageLoaded) {
@@ -1442,59 +1480,60 @@ function Scripts(main) {
 
         if (!$('#blockly-editor').data('inited')) {
             $('#blockly-editor').data('inited', true);
+            loadCustomBlockly(function () {
+                MSG.catSystem = Blockly.Words['System'][systemLang];
+                MSG.catSendto = Blockly.Words['Sendto'][systemLang];
 
-            MSG.catSystem = Blockly.Words['System'][systemLang];
-            MSG.catSendto = Blockly.Words['Sendto'][systemLang];
-            
-            // Interpolate translated messages into toolbox.
-            var toolboxText = document.getElementById('toolbox').outerHTML;
-            toolboxText = toolboxText.replace(/{(\w+)}/g,
-                function(m, p1) {return MSG[p1]});
+                // Interpolate translated messages into toolbox.
+                var toolboxText = document.getElementById('toolbox').outerHTML;
+                toolboxText = toolboxText.replace(/{(\w+)}/g,
+                    function(m, p1) {return MSG[p1]});
 
-            var blocks = '';
-            for (var cb = 0; cb < Blockly.CustomBlocks.length; cb++) {
-                var name = Blockly.CustomBlocks[cb];
-                // add blocks
-                blocks += '<category name="' + Blockly.Words[name][systemLang] + '" colour="' + Blockly[name].HUE + '">';
-                for (var _b in Blockly[name].blocks) {
-                    blocks += Blockly[name].blocks[_b];
-                }
-                blocks += '</category>';
-            }
-            toolboxText = toolboxText.replace('<category><block>%%CUSTOM_BLOCKS%%</block></category>', blocks);
-
-            var toolboxXml = Blockly.Xml.textToDom(toolboxText);
-
-            that.blocklyWorkspace = Blockly.inject(
-                'blockly-editor',
-                {
-                    media: '/adapter/javascript/google-blockly/media/',
-                    toolbox: toolboxXml,
-                    zoom: {
-                        controls:   true,
-                        wheel:      false,
-                        startScale: 1.0,
-                        maxScale:   3,
-                        minScale:   0.3,
-                        scaleSpeed: 1.2
-                    },
-                    trashcan: true,
-                    grid: {
-                        spacing:    25,
-                        length:     3,
-                        colour:     '#ccc',
-                        snap:       true
+                var blocks = '';
+                for (var cb = 0; cb < Blockly.CustomBlocks.length; cb++) {
+                    var name = Blockly.CustomBlocks[cb];
+                    // add blocks
+                    blocks += '<category name="' + Blockly.Words[name][systemLang] + '" colour="' + Blockly[name].HUE + '">';
+                    for (var _b in Blockly[name].blocks) {
+                        blocks += Blockly[name].blocks[_b];
                     }
+                    blocks += '</category>';
                 }
-            );
-            // Listen to events on master workspace.
-            that.blocklyWorkspace.addChangeListener(function (masterEvent) {
-                if (masterEvent.type == Blockly.Events.UI) {
-                    return;  // Don't mirror UI events.
-                }
-                that.changed = true;
-                $('#script-edit-button-save').button('enable');
-                $('#script-edit-button-cancel').button('enable');
+                toolboxText = toolboxText.replace('<category><block>%%CUSTOM_BLOCKS%%</block></category>', blocks);
+
+                var toolboxXml = Blockly.Xml.textToDom(toolboxText);
+
+                that.blocklyWorkspace = Blockly.inject(
+                    'blockly-editor',
+                    {
+                        media: '/adapter/javascript/google-blockly/media/',
+                        toolbox: toolboxXml,
+                        zoom: {
+                            controls:   true,
+                            wheel:      false,
+                            startScale: 1.0,
+                            maxScale:   3,
+                            minScale:   0.3,
+                            scaleSpeed: 1.2
+                        },
+                        trashcan: true,
+                        grid: {
+                            spacing:    25,
+                            length:     3,
+                            colour:     '#ccc',
+                            snap:       true
+                        }
+                    }
+                );
+                // Listen to events on master workspace.
+                that.blocklyWorkspace.addChangeListener(function (masterEvent) {
+                    if (masterEvent.type === Blockly.Events.UI) {
+                        return;  // Don't mirror UI events.
+                    }
+                    that.changed = true;
+                    $('#script-edit-button-save').button('enable');
+                    $('#script-edit-button-cancel').button('enable');
+                });
             });
         }
 
@@ -1551,7 +1590,7 @@ function Scripts(main) {
                             primary:'ui-icon-play'
                         },
                         click: function (id) {
-                            if (this.length == 1) this.button('disable');
+                            if (this.length === 1) this.button('disable');
                             // toggle state
                             that.main.socket.emit('extendObject', id, {
                                 common: {
@@ -1624,7 +1663,7 @@ function Scripts(main) {
                                     } else {
                                         newId = obj._id + '(' + i + ')';
                                     }
-                                } while (that.list.indexOf(newId) != -1);
+                                } while (that.list.indexOf(newId) !== -1);
 
                                 obj._id = newId;
                                 that.main.socket.emit('setObject', newId, obj, function (err, obj) {
@@ -1905,7 +1944,7 @@ function Scripts(main) {
             } else {
                 // deleted
                 var j = this.list.indexOf(id);
-                if (j != -1) this.list.splice(j, 1);
+                if (j !== -1) this.list.splice(j, 1);
                 if (id === this.currentId) {
                     this.changed = false;
                     editScript(null);
@@ -1923,10 +1962,20 @@ function Scripts(main) {
 
             if (this.$grid) this.$grid.selectId('object', id, obj);
         } else
-        if (id.match(/^system\.adapter\.[-\w]+\.[0-9]+$/)) {
+        if (id.match(/^system\.adapter\.[-\w\d]+\.[0-9]+$/)) {
             var val = $('#edit-script-engine-type').val();
             that.engines = that.fillEngines('edit-script-engine-type');
             $('#edit-script-engine-type').val(val);
+        }
+        else
+        if (id.match(/^system\.adapter\.[-\w\d]+\$/)) {
+            if (obj[id].common && obj[id].common.blockly) {
+                main.confirmMessage(_('Some blocks were updated. Reload admin?'), null, null, 700, function (result) {
+                    if (result) {
+                        window.location.reload();
+                    }
+                });
+            }
         }
 
         if (id.match(/^script\.js\./) && obj && obj.type === 'channel') {
@@ -2052,7 +2101,7 @@ var main = {
         if (!main.config) return;
         if (attr) main.config[attr] = value;
 
-        if (typeof storage != 'undefined') {
+        if (typeof storage !== 'undefined') {
             storage.set('adminConfig', JSON.stringify(main.config));
         }
     },
@@ -2178,7 +2227,7 @@ var $dialogConfirm = $('#dialog-confirm');
 // Selected view, selected menu page,
 // Selected widget or view page
 // Selected filter
-if (typeof storage != 'undefined') {
+if (typeof storage !== 'undefined') {
     try {
         main.config = storage.get('adminConfig');
         if (main.config) {

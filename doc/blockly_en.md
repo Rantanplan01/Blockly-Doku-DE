@@ -1,31 +1,31 @@
-# Inhalt
+# Contents
 
-- [Beschreibung](#beschreibung)
+- [Description](#description)
 - [Getting started](#getting-started)
-    - [Beispiel 1](#beispiel-1)
-    - [Beispiel 2](#beispiel-2)
-    - [Beispiel 3](#beispiel-3)
-- [Blöcke](#blocks)
-    - [Systemblöcke](#systemblöcke)
-        - [Debug Ausgabe](#debug-ausgabe)
-        - [Kommentar](#kommentar)
-        - [Steuere State](#steuere-state)
-        - [Aktualisiere State](#aktualisiere-state)
+    - [Sample 1](#sample-1)
+    - [Sample 2](#sample-2)
+    - [Sample 3](#sample-3)
+- [Blocks](#blocks)
+    - [System blocks](#system-blocks)
+        - [Debug output](#debug-output)
+        - [Comment](#comment)
+        - [Control state](#control-state)
+        - [Update state](#update-state)
         - [Bind states](#bind-states)
         - [Write states](#write-states)
         - [Create state](#create-state)
         - [Get value of state](#get-value-of-state)
         - [Get Object ID](#get-object-id)
-    - [Aktionsblöcke](#aktionsblöcke)
-        - [Exec - Kommando](#exec---kommando)
+    - [Actions Blocks](#actions-blocks)
+        - [Exec - execute](#exec---execute)
         - [request URL](#request-url)
-    - [SendTo Blöcke](#sendTo-blöcke)
+    - [Send to Blocks](#send-to-blocks)
         - [Send to telegram](#send-to-telegram)
         - [Send to SayIt](#send-to-sayit)
         - [Send to pushover](#send-to-pushover)
         - [Send email](#send-email)
         - [Custom sendTo block](#custom-sendto-block)
-    - [Datum und Zeit Blöcke](#datum-und-zeit-blöcke)
+    - [Date and Time blocks](#date-and-time-blocks)
         - [Time comparision](#time-comparision)
         - [Actual time comparision](#actual-time-comparision)
         - [Get actual time im specific format](#get-actual-time-im-specific-format)
@@ -119,288 +119,113 @@
         - [Create custom function with return value](#create-custom-function-with-return-value)
         - [Call function](#call-function)
 
+# Description
+Blockly is a visual editor that allows users to write programs by adding blocks together. 
+It is designed for people with no prior experience with computer programming. 
 
-&nbsp;
-# Beschreibung
-Blockly ist ein grafischer Editor, der es Nutzern erlaubt Skripte durch zusammenfügen von Blöcken zu erzeugen. 
-Er wurde für Nutzer entwickelt, die keine Erfahrung in Programmierung von Computern besitzen.
-
-
-&nbsp;
 # Getting started
 
-## Beispiel 1
-**Zustand eines Datenpunkts bei Änderung eines anderen Datenpunkts ändern**
+## Sample 1
+**Control state on change of some other state**
 
-![Getting started 1](img/getting_started_1_de.png)
+![Getting started 1](img/getting_started_1_en.png)
 
-Dies ist das klassische Beispiel bei Änderung eines Datenpunktes etwas anderes zu schalten.
+This is the classical rule to switch something ON or OFF on other event.
 
-Hier wird das Licht an oder ausgeschaltet wenn Bewegung bzw. keine Bewegung erkannt wird.
+Here the light will be switched on or off if the motion was detected or motion detector sends IDLE state.
 
-Zuerst den Block "Triggers=>Falls Objekt" einfügen. Die Objekt ID auswählen um den Zustand des Objekts als Trigger für dieses Skript zu benutzen.
+First of all insert block "Triggers=>Event: if object". Select object ID to use this state as trigger for rule.
 
-Einen anderen Block - "System=>Steuere" hinzufügen und im Dialog den anderen Zustand der durch den Trigger geändert werden soll auswählen.
+Add to trigger other block - "System=>Control" and select in dialog other state that must be controlled by event.
 
-In diesen Steuerungsblock einen Block "System=>Wert von Objekt ID" einfügen und im Dialog das Objekt "Bewegung" auswählen, um dessen Zustand in "Licht": zu schreiben.
+Insert into control block the "System=>Get value of state" block and select in dialog the "Motion" object to write the value of this state into "Light"*[]: 
+ 
+There is a special variable **value"" in trigger block. It is always defined there and you can use this variable for your need. It consist actual value of triggered state and you can create simpler rule by using "Variable=>item" block and renaming it into "value".
 
-**Es gibt bei den Trigger Blöcken eine spezielle Variable "Wert". Diese wird immer hier definiert und kann für verschiedene Zwecke verwendet werden. Sie enthält den aktuellen Wert des triggernden Objekts und man kann daher einfacherer Skripte erzeugen indem man den Block "Variable=>Objekt ID" benutzt und ihn in "Wert" umbenennt.**
-
-![Getting started 1](img/getting_started_1_2_de.png)
-
-
-&nbsp;
-Beispiel zum importieren:
+![Getting started 1](img/getting_started_1_2_en.png)
 
 ```
 <xml xmlns="http://www.w3.org/1999/xhtml">
-  <block type="comment" id="MM0e-B-5h,abf).M1y;T" x="-312" y="238">
-    <field name="COMMENT">Schaltet Licht EIN oder AUS je nach</field>
+  <block type="comment" id="s7s**k+Cc_KjDnJW`(h~" x="12" y="63">
+    <field name="COMMENT">Switch light ON or OFF it motion detected or IDLE</field>
     <next>
-      <block type="comment" id="3B7ZGW3|l9*)%p%|~W{H">
-        <field name="COMMENT">Bewegung erkannt oder nicht</field>
-        <next>
-          <block type="on_ext" id="|?8`.19Mh@e2D3HDv}q4">
-            <mutation items="1"></mutation>
-            <field name="CONDITION">ne</field>
-            <field name="ACK_CONDITION"></field>
-            <value name="OID0">
-              <shadow type="field_oid" id="x^c!j;Cice~+C74Dh1%K">
-                <field name="oid">javascript.1.Bewegung</field>
-              </shadow>
-            </value>
-            <statement name="STATEMENT">
-              <block type="control" id="G:A4m6^?)no/Z1tXmw}I">
-                <mutation delay_input="false"></mutation>
-                <field name="OID">javascript.1.Licht</field>
-                <field name="WITH_DELAY">FALSE</field>
-                <value name="VALUE">
-                  <block type="variables_get" id="wG4G`J5r!AumAvzRNJFE">
-                    <field name="VAR">value</field>
-                  </block>
-                </value>
+      <block type="on_ext" id="#}:B(M-o5:/]k,_msr%y">
+        <mutation items="1"></mutation>
+        <field name="CONDITION">ne</field>
+        <field name="ACK_CONDITION"></field>
+        <value name="OID0">
+          <shadow type="field_oid" id="o~6)!C0IVy{WD%Km(lkc">
+            <field name="oid">javascript.0.Motion</field>
+          </shadow>
+        </value>
+        <statement name="STATEMENT">
+          <block type="control" id="(ZqzhS_7*jGpk;`zJAZg">
+            <mutation delay_input="false"></mutation>
+            <field name="OID">javascript.0.Light</field>
+            <field name="WITH_DELAY">FALSE</field>
+            <value name="VALUE">
+              <block type="get_value" id="a-E@UcwER=knNljh@:M/">
+                <field name="ATTR">val</field>
+                <field name="OID">javascript.0.Motion</field>
               </block>
-            </statement>
+            </value>
           </block>
-        </next>
+        </statement>
       </block>
     </next>
   </block>
 </xml>
 ```
 
+## Sample 2 
+**Switch light on by motion and switch off in 10 minutes if no motion detected.**
 
-&nbsp;
-## Beispiel 2 
-**Licht bei Bewegung anschalten und ausschalten wenn 10 Minuten keine Bewegung.**
+![Getting started 2](img/getting_started_2_en.png)
 
-![Getting started 2](img/getting_started_2_de.png)
+If state "Motion" was updated with value true do:
+- switch "Light" on
+- start the delayed set in 10 minutes to switch "Light" off and clear all the delayed sets for this state
 
-Wenn der Zustand "Bewegung" mit dem Wert "wahr" aktualisiert wird, mache:
-- schalte "Licht" an
-- starte die Verzögerung von 10 Minuten um "Licht" auszuschalten und lösche alle bisherigen Verzögerungen für diesen Datenpunkt.
-
-Wie man sieht wird der Flag "lösche Verzögerung" durch den letzten Befehl gelöscht. Dieses löscht alle Timer für diesen Datenpunkt und startet einen neuen Timer
-
-
-&nbsp;
-Beispiel zum importieren:
+You can notice, that the flag "clear running" is set by last command. This clears any running timers for this state and the timer will be started anew.
 
 ```
 <xml xmlns="http://www.w3.org/1999/xhtml">
   <block type="comment" id="s7s**k+Cc_KjDnJW`(h~" x="112" y="63">
-    <field name="COMMENT">Schaltet bei Bewegung Licht EIN und</field>
+    <field name="COMMENT">Switch light ON and OFF in 10 minutes of IDLE</field>
     <next>
-      <block type="comment" id="ln0;1g]pz=VdJrleeOF4">
-        <field name="COMMENT">in 10 Minuten wieder AUS wenn keine Bewegung</field>
-        <next>
-          <block type="on_ext" id="#}:B(M-o5:/]k,_msr%y">
-            <mutation items="1"></mutation>
-            <field name="CONDITION">true</field>
-            <field name="ACK_CONDITION">true</field>
-            <value name="OID0">
-              <shadow type="field_oid" id="o~6)!C0IVy{WD%Km(lkc">
-                <field name="oid">javascript.0.Bewegung</field>
-              </shadow>
-            </value>
-            <statement name="STATEMENT">
-              <block type="control" id="(ZqzhS_7*jGpk;`zJAZg">
-                <mutation delay_input="false"></mutation>
-                <field name="OID">javascript.0.Licht</field>
-                <field name="WITH_DELAY">FALSE</field>
-                <value name="VALUE">
-                  <block type="logic_boolean" id="%^ADwe*2l0tLw8Ga5F*Y">
-                    <field name="BOOL">TRUE</field>
-                  </block>
-                </value>
-                <next>
-                  <block type="control" id="=]vmzp6j^V9:3?R?2Y,x">
-                    <mutation delay_input="true"></mutation>
-                    <field name="OID">javascript.0.Licht</field>
-                    <field name="WITH_DELAY">TRUE</field>
-                    <field name="DELAY_MS">600000</field>
-                    <field name="CLEAR_RUNNING">TRUE</field>
-                    <value name="VALUE">
-                      <block type="logic_boolean" id="!;DiIh,D]l1oN{D;skYl">
-                        <field name="BOOL">FALSE</field>
-                      </block>
-                    </value>
-                  </block>
-                </next>
-              </block>
-            </statement>
-          </block>
-        </next>
-      </block>
-    </next>
-  </block>
-</xml>
-```
-
-
-&nbsp;
-## Beispiel 3
-**Verschicke eine eMail wenn die Außentemperatur höher als 25 Grad Celsius ist.**
-
-![Getting started 3](img/getting_started_3_de.png)
-
-Erklärung:
-
-Zuerst müssen wir eine Variable definieren um zu speichern, dass die eMail für den aktuellen Temperaturalarm bereits gesendet wurde und diese Variable auf "falsch" setzen.
-Dann beobachten wir die Veränderungen der Temperatur. Wir könnten dieses Skript auch periodisch ausführen, aber das ist nicht so effektiv.
-
-Wenn sich die Temperatur ändert vergleichen wir den aktuellen Wert mit 25 und prüfen ob die eMail bereits verschickt wurde oder nicht.
-Wenn die eMail noch nicht versendet war, speichern wir dass wir sie jetzt senden und senden sie auch. Natürlich muss der eMail-Adapter vorher installiert und konfiguriert worden sein.
-
-Wenn die Temperatur unter 23 Grad fällt setzen wir die Variable "emailSent" zurück, damit beim nächsten Temperaturalarm wieder eine eMail gesendet wird. 
-Dazu wird die aktuelle Temperatur mit 23 verglichen und es werden keine eMails geschickt, solange die Temperatur um 25 Grad schwankt.
-
-Um den "falls ... sonst falls ..." Block zu erstellen klickt man auf das Zahnrad und fügt die zusätzlich benötigten Elemente dem "falls" Block hinzu.
-
-![Getting started 3](img/getting_started_3_1_de.png)
-
-Man kann zu jedem Block einen Kommentar hinterlegen, indem man "Kommentar hinzufügen" im Kontextmenü des Blocks anklickt. Diesen Kommentar kann man später durch anklicken des Fragezeichens ansehen.
-
-![Getting started 3](img/getting_started_3_2_de.png)
-
-Man kann größere Blöcke einklappen um eine bessere Übersicht zu erhalten, indem man im Kontextmenü den Punkt "Block einklappen" auswählt. 
-
-![Getting started 3](img/getting_started_3_3_de.png)
-
-
-&nbsp;
-Beispiel zum importieren:
-
-```
-<xml xmlns="http://www.w3.org/1999/xhtml">
-  <block type="comment" id="u?1SiqEv[sL%Av?hI~.m" x="88" y="13">
-    <field name="COMMENT">Sende Email wenn Außentemperatur größer...</field>
-    <next>
-      <block type="on_ext" id="DR}w0I%EUL-FCI%`w5L4">
+      <block type="on_ext" id="#}:B(M-o5:/]k,_msr%y">
         <mutation items="1"></mutation>
-        <field name="CONDITION">ne</field>
+        <field name="CONDITION">true</field>
         <field name="ACK_CONDITION">true</field>
         <value name="OID0">
-          <shadow type="field_oid" id="}TdS?2Lg~Mt[0!o0iMG.">
-            <field name="oid">javascript.0.Aussentemperatur</field>
+          <shadow type="field_oid" id="o~6)!C0IVy{WD%Km(lkc">
+            <field name="oid">javascript.0.Motion</field>
           </shadow>
         </value>
         <statement name="STATEMENT">
-          <block type="controls_if" id="rBBI(VLLLRnwd|ys59si">
-            <mutation elseif="1"></mutation>
-            <value name="IF0">
-              <block type="logic_operation" id="B5R%#,6F,xYI1gB!jjq|">
-                <field name="OP">AND</field>
-                <value name="A">
-                  <block type="logic_compare" id="I=R,TaB*pge*l#j|[HZ0">
-                    <field name="OP">EQ</field>
-                    <value name="A">
-                      <block type="variables_get" id="wd1I0gzqle,y-:h@GF)v">
-                        <field name="VAR">emailSent</field>
-                      </block>
-                    </value>
-                    <value name="B">
-                      <block type="logic_boolean" id="q5~/ZIb))r`w]/RaSXUu">
-                        <field name="BOOL">FALSE</field>
-                      </block>
-                    </value>
-                  </block>
-                </value>
-                <value name="B">
-                  <block type="logic_compare" id="*}fC?JlzN*:45[j?Vq.U">
-                    <field name="OP">GT</field>
-                    <value name="A">
-                      <block type="variables_get" id="sV8c9+]d.0N%ka7]~!?^">
-                        <field name="VAR">value</field>
-                      </block>
-                    </value>
-                    <value name="B">
-                      <block type="math_number" id="8*c}uX@esPcOShB4^tj)">
-                        <field name="NUM">23</field>
-                      </block>
-                    </value>
-                  </block>
-                </value>
+          <block type="control" id="(ZqzhS_7*jGpk;`zJAZg">
+            <mutation delay_input="false"></mutation>
+            <field name="OID">javascript.0.Light</field>
+            <field name="WITH_DELAY">FALSE</field>
+            <value name="VALUE">
+              <block type="logic_boolean" id="%^ADwe*2l0tLw8Ga5F*Y">
+                <field name="BOOL">TRUE</field>
               </block>
             </value>
-            <statement name="DO0">
-              <block type="variables_set" id="i):z[{@|*;4zOruzXH46">
-                <field name="VAR">emailSent</field>
-                <comment pinned="false" h="80" w="160">Remember, that email was sent</comment>
+            <next>
+              <block type="control" id="=]vmzp6j^V9:3?R?2Y,x">
+                <mutation delay_input="true"></mutation>
+                <field name="OID">javascript.0.Light</field>
+                <field name="WITH_DELAY">TRUE</field>
+                <field name="DELAY_MS">600000</field>
+                <field name="CLEAR_RUNNING">TRUE</field>
                 <value name="VALUE">
-                  <block type="logic_boolean" id="56A@]MZKiuL(iuuj)MRI">
-                    <field name="BOOL">TRUE</field>
-                  </block>
-                </value>
-                <next>
-                  <block type="email" id="3J#TXZ`oei_NMEL,_w8K">
-                    <field name="INSTANCE"></field>
-                    <field name="IS_HTML">FALSE</field>
-                    <field name="LOG">log</field>
-                    <value name="TO">
-                      <shadow type="text" id="j*x?kanQQyGH/pN,r9B2">
-                        <field name="TEXT">meineAdresse@domain.com</field>
-                      </shadow>
-                    </value>
-                    <value name="TEXT">
-                      <shadow type="text" id="QE(T_Z]{=o8~h~+vz!ZU">
-                        <field name="TEXT">Temperaturwarnung!!!</field>
-                      </shadow>
-                    </value>
-                    <value name="SUBJECT">
-                      <shadow type="text" id="/_AxN7@=T|t@XW.^Fu1(">
-                        <field name="TEXT">Temperatur ist über 25°C</field>
-                      </shadow>
-                    </value>
-                  </block>
-                </next>
-              </block>
-            </statement>
-            <value name="IF1">
-              <block type="logic_compare" id="S?0|;{3V3!_rqUk]GJ4)">
-                <field name="OP">LT</field>
-                <value name="A">
-                  <block type="variables_get" id="IJwq1,|y;l7ueg1mF{~x">
-                    <field name="VAR">value</field>
-                  </block>
-                </value>
-                <value name="B">
-                  <block type="math_number" id="m(.v?M3ezTKz(kf5b9ZE">
-                    <field name="NUM">23</field>
-                  </block>
-                </value>
-              </block>
-            </value>
-            <statement name="DO1">
-              <block type="variables_set" id="M0{G}QBtF!FYrT,xWBnV">
-                <field name="VAR">emailSent</field>
-                <value name="VALUE">
-                  <block type="logic_boolean" id="ti#H=_:;-XRC%CzR/+/0">
+                  <block type="logic_boolean" id="!;DiIh,D]l1oN{D;skYl">
                     <field name="BOOL">FALSE</field>
                   </block>
                 </value>
               </block>
-            </statement>
+            </next>
           </block>
         </statement>
       </block>
@@ -410,24 +235,157 @@ Beispiel zum importieren:
 ```
 
 
-&nbsp;
+## Sample 3
+**Send email if outside temperature is more than 25 grad Celsius.**
 
+![Getting started 3](img/getting_started_3_en.png)
 
-&nbsp;
-# Blöcke
+Explanation:
 
-## Systemblöcke
+First we must to define the variable to remember if the email yet sent for actual temperature alert or not and fill it with "false".
+Then we subscribe on changes of temperature. We can execute our rule periodically, but is is not so effective. 
 
-### Debug Ausgabe
+If temperature was changed we compare its value with 25 and check if the email yet sent or not. 
+If email is not sent, we remember, that email sent and send the email. Of course email adapter must be installed and configured before.
+
+If the temperature less than 23 grad, reset "emailSent" flag to send email by next temperature alert. 
+We compare temperature with 23 to do not sent emails every time if temperature fluctuate about 25 grad.
+
+To create the "if ... else if ..." block you must click on the gear icon and add required parts to "IF" block.
+![Getting started 3](img/getting_started_3_1_en.png)
+
+You can specify comment for every block by selecting "Add comment" in context menu. You can later open the comments by clicking on the question mark icon.
+![Getting started 3](img/getting_started_3_2_en.png)
+
+You can collapse some big blocks for better code presentation by selection in context menu "Collapse Block". 
+![Getting started 3](img/getting_started_3_3_en.png)
+
+Sample to import:
+```
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <block type="comment" id="r53:ZiP]3DYe;Ly;@!v5" x="87" y="13">
+    <field name="COMMENT"> Send email if outside temperature is more than 25 grad Celsius.</field>
+    <next>
+      <block type="variables_set" id="oyEg!Z7~qid+!HYECD8C">
+        <field name="VAR">emailSent</field>
+        <value name="VALUE">
+          <block type="logic_boolean" id="gakxd?9T354S1#_(=)%K">
+            <field name="BOOL">FALSE</field>
+          </block>
+        </value>
+        <next>
+          <block type="on_ext" id="DR}w0I%EUL-FCI%`w5L4">
+            <mutation items="1"></mutation>
+            <field name="CONDITION">ne</field>
+            <field name="ACK_CONDITION">true</field>
+            <value name="OID0">
+              <shadow type="field_oid" id="}TdS?2Lg~Mt[0!o0iMG.">
+                <field name="oid">javascript.0.Outside_temperature</field>
+              </shadow>
+            </value>
+            <statement name="STATEMENT">
+              <block type="controls_if" id="rBBI(VLLLRnwd|ys59si">
+                <mutation elseif="1"></mutation>
+                <value name="IF0">
+                  <block type="logic_operation" id="B5R%#,6F,xYI1gB!jjq|">
+                    <field name="OP">AND</field>
+                    <value name="A">
+                      <block type="logic_compare" id="I=R,TaB*pge*l#j|[HZ0">
+                        <field name="OP">EQ</field>
+                        <value name="A">
+                          <block type="variables_get" id="wd1I0gzqle,y-:h@GF)v">
+                            <field name="VAR">emailSent</field>
+                          </block>
+                        </value>
+                        <value name="B">
+                          <block type="logic_boolean" id="q5~/ZIb))r`w]/RaSXUu">
+                            <field name="BOOL">FALSE</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <statement name="DO0">
+                  <block type="variables_set" id="i):z[{@|*;4zOruzXH46">
+                    <field name="VAR">emailSent</field>
+                    <comment pinned="false" h="80" w="160">Remember, that email was sent</comment>
+                    <value name="VALUE">
+                      <block type="logic_boolean" id="56A@]MZKiuL(iuuj)MRI">
+                        <field name="BOOL">FALSE</field>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="email" id="3J#TXZ`oei_NMEL,_w8K">
+                        <field name="INSTANCE"></field>
+                        <field name="IS_HTML">FALSE</field>
+                        <field name="LOG">log</field>
+                        <value name="TO">
+                          <shadow type="text" id="j*x?kanQQyGH/pN,r9B2">
+                            <field name="TEXT">myaddress@domain.com</field>
+                          </shadow>
+                        </value>
+                        <value name="TEXT">
+                          <shadow type="text" id="QE(T_Z]{=o8~h~+vz!ZU">
+                            <field name="TEXT">Temperature is over 25°C</field>
+                          </shadow>
+                        </value>
+                        <value name="SUBJECT">
+                          <shadow type="text" id="/_AxN7@=T|t@XW.^Fu1(">
+                            <field name="TEXT">Temperature alert</field>
+                          </shadow>
+                        </value>
+                      </block>
+                    </next>
+                  </block>
+                </statement>
+                <value name="IF1">
+                  <block type="logic_compare" id="S?0|;{3V3!_rqUk]GJ4)">
+                    <field name="OP">LT</field>
+                    <value name="A">
+                      <block type="variables_get" id="IJwq1,|y;l7ueg1mF{~x">
+                        <field name="VAR">value</field>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <block type="math_number" id="m(.v?M3ezTKz(kf5b9ZE">
+                        <field name="NUM">23</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <statement name="DO1">
+                  <block type="variables_set" id="M0{G}QBtF!FYrT,xWBnV">
+                    <field name="VAR">emailSent</field>
+                    <value name="VALUE">
+                      <block type="logic_boolean" id="ti#H=_:;-XRC%CzR/+/0">
+                        <field name="BOOL">FALSE</field>
+                      </block>
+                    </value>
+                  </block>
+                </statement>
+              </block>
+            </statement>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+</xml>
+```
+
+# Blocks
+
+## System blocks
+
+### Debug output
 ![Debug output](img/system_debug_en.png)
 
-Dieser Block macht nichts, außer eine Zeile ins log zu schreiben. Man kann ihn zum debuggen des Scripts nutzen, wie diesen hier:
+This block does nothing except prints line into the log. You can use it for debugging of your script.
+
+Like this one: 
 
 ![Debug output](img/system_debug_1_en.png)
-
-
-&nbsp;
-Beispiel zum importieren:
 
 ```
 <xml xmlns="http://www.w3.org/1999/xhtml">
@@ -457,62 +415,50 @@ Beispiel zum importieren:
 </xml>
 ```
 
-
-
-Man kann 4 verschiedene Schweregrade für die Nachrichten definieren:
-- debug (dazu muss der debug-Level der Javascript Instanz aktiviert sein.)
-- info (default, zumindest der info log level muss ider Javascript Instanz aktiviert sein.)
+You can define 4 different levels of severity for message:
+- debug (the debug level of javascript adapter must be enabled)
+- info (default, at least info log level must be set in javascript instance settings)
 - warning 
-- error (wird immer angezeigt. Die anderen Level können ignoriert werden, wenn es entsprechend in der der Javascript Instanz eingestellt ist.)
+- error - will be always displayed. Other severity levels can be ignored if severity of logging in javascirpt adapter is higher.
 
+### Comment
+![Comment](img/system_comment_en.png)
 
-&nbsp;
-### Kommentar
-![Comment](img/system_comment_de.png)
+Comment your code to understand it later better. 
 
-Einen Kommentar zum Skript hinzufügen um es später besser verstehen zu können.
+It does nothing, just a comment.
 
-Der Block macht gar nichts, es ist nur ein Kommentar.
+### Control state
+![Control state](img/system_control_en.png)
 
+You can write the state with two different meanings:
+- to control something and send command to end hardware (this block)
+- to update some state to just inform about e.g. new temperature ([next block](#update-state))
 
-&nbsp;
-### Steuere State
-![Control state](img/system_control_de.png)
+Typical usage of block:
 
-Man kann einen Zustand auf zwei verschiedene Arten schreiben:
-- Um etwas zu steuern und den Wert an die Hardware zu schicken (Dieser Block)
-- Einen neuen Wert schreiben, der nur der Information dient, z.B. Temperaturänderung ([nächster Block](#update-state))
+![Control state](img/system_control_sample1_en.png)
 
+The object ID must be selected from dialog and the value must be defined too. Depends on the type of state the value can be [string](#string-value), [number](#number-value) or [boolean](#ogical-value-trueflase).
 
-&nbsp;
-Typische Anwendung dieses Blocks:
+You can read the explanation [here](https://github.com/ioBroker/ioBroker/wiki/Adapter-Development-Documentation#commands-and-statuses).
 
-![Control state](img/system_control_sample1_de.png)
+This block writes command into state (ack=false). Additionally the delay can be specified.
+If delay is not 0, the state will be set not immediately but after defined in milliseconds period of time.
 
-Die Object ID wird im Dialog ausgewählt der zu sendende Wert muss angegeben werden. Abhängig vom Typ des Datenpunkts kann der Wert vom Typ [string](#string-value), [number](#number-value) oder [boolean](#ogical-value-trueflase) sein.
+You can stop all running delayed sets by issuing of control command. 
 
-Weitere Erklärungen gibt es [hier](https://github.com/ioBroker/ioBroker/wiki/Adapter-Development-Documentation#commands-and-statuses).
-
-Dieser Block schreibt den Befehl in den Datenpunkt mit (ack=false). Zusätzlich kann eine Verzögerung angegeben werden.
-Wenn die Verzögerung nicht 0 ist, wird der Zustand nicht sofort, sondern erst nach der angegebenen Zeit in Millisekunden gesetzt.
-
-Man kann alle anderen Verzögerungen für diesen Datenpunkt löschen, indem man die Checkbox anhakt.
-
-So wird in dem folgenden Beispiel der Datenpunkt "Licht" nur einmal geschaltet (nach 2 Sekunden):
-![Control state](img/system_control_1_de.png)
-
-
-&nbsp;
-Beispiel zum importieren:
+E.g in following schema the state "Light" will be controlled only once (in 2 seconds):
+![Control state](img/system_control_1_en.png)
 
 ```
 <xml xmlns="http://www.w3.org/1999/xhtml">
-  <block type="comment" id="60%Ca]j^{qor=,DttZKp" x="13" y="63">
-    <field name="COMMENT">Wird nur einmal ausgeführt</field>
+  <block type="comment" id="K|2AnJ|5})RoNZ1T%Hh#" x="38" y="13">
+    <field name="COMMENT">Will be executed only once</field>
     <next>
       <block type="control" id="IWceY@BFn9/Y?Ez^b(_-">
         <mutation delay_input="true"></mutation>
-        <field name="OID">javascript.0.Licht</field>
+        <field name="OID">javascript.0.Light</field>
         <field name="WITH_DELAY">TRUE</field>
         <field name="DELAY_MS">1000</field>
         <field name="CLEAR_RUNNING">FALSE</field>
@@ -524,7 +470,7 @@ Beispiel zum importieren:
         <next>
           <block type="control" id=".Ih(K(P)SFApUP0)/K7,">
             <mutation delay_input="true"></mutation>
-            <field name="OID">javascript.0.Licht</field>
+            <field name="OID">javascript.0.Light</field>
             <field name="WITH_DELAY">TRUE</field>
             <field name="DELAY_MS">2000</field>
             <field name="CLEAR_RUNNING">TRUE</field>
@@ -541,17 +487,17 @@ Beispiel zum importieren:
 </xml>
 ```
 
-Im Gegensatz zu dem vorherigen Beispiel wird der Zustand von "Licht" in dem folgenden Beispiel zweimal geschaltet(nach 1 Sekunde und nach 2 Sekunden):
-![Control state](img/system_control_2_de.png)
+But in this schema the state "Light" will be controlled twice (in 1 second and in 2 seconds):
+![Control state](img/system_control_2_en.png)
 
 ```
 <xml xmlns="http://www.w3.org/1999/xhtml">
-  <block type="comment" id="+.Q==uhWOq@5}kv7d0dF" x="38" y="63">
-    <field name="COMMENT">Wird zweimal ausgeführt</field>
+  <block type="comment" id="K|2AnJ|5})RoNZ1T%Hh#" x="38" y="13">
+    <field name="COMMENT">Will be executed twice</field>
     <next>
       <block type="control" id="IWceY@BFn9/Y?Ez^b(_-">
         <mutation delay_input="true"></mutation>
-        <field name="OID">javascript.0.Licht</field>
+        <field name="OID">javascript.0.Light</field>
         <field name="WITH_DELAY">TRUE</field>
         <field name="DELAY_MS">1000</field>
         <field name="CLEAR_RUNNING">FALSE</field>
@@ -563,7 +509,7 @@ Im Gegensatz zu dem vorherigen Beispiel wird der Zustand von "Licht" in dem folg
         <next>
           <block type="control" id=".Ih(K(P)SFApUP0)/K7,">
             <mutation delay_input="true"></mutation>
-            <field name="OID">javascript.0.Licht</field>
+            <field name="OID">javascript.0.Light</field>
             <field name="WITH_DELAY">TRUE</field>
             <field name="DELAY_MS">2000</field>
             <field name="CLEAR_RUNNING">FALSE</field>
@@ -580,187 +526,143 @@ Im Gegensatz zu dem vorherigen Beispiel wird der Zustand von "Licht" in dem folg
 </xml>
 ```
 
+### Update state
+![Update state](img/system_update_en.png)
 
-&nbsp;
-### Aktualisiere State
-![Update state](img/system_update_de.png)
+This block is similar to [control block](#control-state), but it is only updates the value. No command to control the hardware will be sent.
 
-Dieser Block ist ähnlich dem [Steuere Block](#steuere-state), aber er setzt nur den aktuellen Wert. Es wird kein Befehl zum steuern der Hardware gesendet.
+Typical usage example:
 
+![Update state](img/system_update_sample_en.png)
 
-Typische Anwendung dieses Blocks:
+### Bind states
+![Bind state](img/system_bind_en.png)
 
-![Update state](img/system_update_sample_de.png)
+This block simply binds two states with each other.
 
+You can achieve the same with this blocks:
 
-&nbsp;
-### Bind States
-![Bind state](img/system_bind_de.png)
+![Bind state](img/system_bind_1_en.png)
 
-Dieser Block bindet zwei Zustände aneinander.
+You can select if the value will be forwarded only if source state was changed or always when the state is just updated. 
 
-Man kann das gleiche mit diesen Blöcken erreichen:
-
-![Bind state](img/system_bind_1_de.png)
-
-Man kann auswählen, ob der Wert nur weitergeleitet wird,  wenn sich die Quelle ändert, oder bei jeder Aktualisierung.
-
-
-&nbsp;
-Beispiel zum importieren:
 ```
-<xml xmlns="http://www.w3.org/1999/xhtml">
-  <block type="on_ext" id="w/@=5/5!D;8wn4DZ;jzG" x="38" y="63">
-    <mutation items="1"></mutation>
-    <field name="CONDITION">ne</field>
-    <field name="ACK_CONDITION"></field>
-    <value name="OID0">
-      <shadow type="field_oid" id="tQBL3[;V1luVO[`h2ONM">
-        <field name="oid">javascript.0.Bewegung</field>
-      </shadow>
-    </value>
-    <statement name="STATEMENT">
-      <block type="control" id="w=sN]yxb)5Jv!,YK[C5%">
-        <mutation delay_input="false"></mutation>
-        <field name="OID">javascript.0.Licht</field>
-        <field name="WITH_DELAY">FALSE</field>
-        <value name="VALUE">
-          <block type="variables_get" id="6`1|t;T%_h^|ES+nd~/?">
-            <field name="VAR">value</field>
-          </block>
-        </value>
-      </block>
-    </statement>
-    <next>
-      <block type="comment" id="=I?k7N!x*MiD[]Q?=^hg">
-        <field name="COMMENT">Dasselbe wie</field>
-        <next>
-          <block type="direct" id="4z4hZ-/J^d^zLJ+NTdlJ">
-            <field name="ONLY_CHANGES">TRUE</field>
-            <value name="OID_SRC">
-              <shadow type="field_oid" id="-!UkGiE]TjiVhnVJr8+E">
-                <field name="oid">javascript.0.Bewegung</field>
-              </shadow>
-            </value>
-            <value name="OID_DST">
-              <shadow type="field_oid" id="ftiC`?=69AU]4B.Cn}*p">
-                <field name="oid">javascript.0.Licht</field>
-              </shadow>
-            </value>
-          </block>
-        </next>
-      </block>
-    </next>
-  </block>
-</xml>
+<block xmlns="http://www.w3.org/1999/xhtml" type="on_ext" id="w/@=5/5!D;8wn4DZ;jzG" x="287.99999999999943" y="37.999999999999716">
+  <mutation items="1"></mutation>
+  <field name="CONDITION">ne</field>
+  <field name="ACK_CONDITION"></field>
+  <value name="OID0">
+    <shadow type="field_oid" id="tQBL3[;V1luVO[`h2ONM">
+      <field name="oid">javascript.0.Motion</field>
+    </shadow>
+  </value>
+  <statement name="STATEMENT">
+    <block type="control" id="w=sN]yxb)5Jv!,YK[C5%">
+      <mutation delay_input="false"></mutation>
+      <field name="OID">javascript.0.Light</field>
+      <field name="WITH_DELAY">FALSE</field>
+      <value name="VALUE">
+        <block type="variables_get" id="6`1|t;T%_h^|ES+nd~/?">
+          <field name="VAR">value</field>
+        </block>
+      </value>
+    </block>
+  </statement>
+</block>
 ```
-
-
 
 ### Write states
-![Write state](img/system_write_de.png)
+![Write state](img/system_write_en.png)
 
-Dies ist ein universeller Block zum schreiben von Zuständen, indem er das slebe macht, wie ["Aktualisiere State"](#aktualisiere-state) and ["Steuere State"](#steuere-state) zusammen. 
+Universal write block that can do the same as ["Update state"](#update-state) and ["Control state"](#control-state) together. 
 
-Aber im Vergleich dazu kann man die Objekt ID und die Verzögerung über andere Blöcke definieren um das Skript universeller zu gestalten.
+But in compare with them you can define Object ID and delay with other blocks to make your script more universal.
 
+### Create state
+![Create state](img/system_create_en.png)
+There are two types of variables that can be created in scripts:
+- local [variables](#set-variables-value)
+- global variables or states. 
 
+Global states are visible in all scripts, but local are visible only in this current script.
 
-### Erzeuge State
-![Create state](img/system_create_de.png)
+Global states can be used in vis, mobile and all other logic or visualisation modules, can be logged into db or whatever.
 
-Es gibt zwei verschiedene Arten von Variablen, die mit diesem Block erzeugt werden können:
-- lokale [Variablen](#set-variables-value)
-- globale Variablen oder Zustände. 
+This block creates global state and if the state yet exist, the command will be ignored. You can safely call this block by every start of the script.
 
-Globale Zustände sind in allen Skripts sichtbar, während lokale nur in dem aktuellen Skript gültig sind.
+Typical usage example:
 
-Global Zustände können in vis, mobile und allen anderen Logik- oder Visualisierungsmodulen genutz werden, sie können gelogged werden in Datenbanken oder wo auch immer.
-
-Dieser Block erzeugt globale Zustände und wenn dieser bereits existiert wird der Befehl ignoriert. Daher kann dieser Block ohne Risiko zu jedem Skriptstart verwendet werden.
-
-
-&nbsp;
-Typische Anwendung dieses Blocks:
-
-![Create state](img/system_create_sample1_de.png)
+![Create state](img/system_create_sample1_en.png)
 
 ```
 <xml xmlns="http://www.w3.org/1999/xhtml">
-  <block type="comment" id="_vlSDnaLIS5#,p#}M-%?" x="38" y="88">
-    <field name="COMMENT">Erstellt ein State (Variable) und gibt deren</field>
+  <block type="comment" id="dBV.{0z/{Fr@RB+10H5i" x="38" y="13">
+    <field name="COMMENT">Create state and subscribe on it changes</field>
     <next>
-      <block type="comment" id="bPJ@?.^.=:-5N5l`@9T!">
-        <field name="COMMENT">Inhalt aus wenn sie geändert wird</field>
-        <next>
-          <block type="create" id="D%[{T~!b9^V#Z.7bI+3y">
-            <field name="NAME">meinState</field>
+      <block type="create" id="D%[{T~!b9^V#Z.7bI+3y">
+        <field name="NAME">myState</field>
+        <statement name="STATEMENT">
+          <block type="on_ext" id="H@F~z_,FpvXo8BptmAtL">
+            <mutation items="1"></mutation>
+            <field name="CONDITION">ne</field>
+            <field name="ACK_CONDITION"></field>
+            <value name="OID0">
+              <shadow type="field_oid" id="hn{OMH9y7AP_dns;KO6*">
+                <field name="oid">javascript.0.myState</field>
+              </shadow>
+            </value>
             <statement name="STATEMENT">
-              <block type="on_ext" id="H@F~z_,FpvXo8BptmAtL">
-                <mutation items="1"></mutation>
-                <field name="CONDITION">ne</field>
-                <field name="ACK_CONDITION"></field>
-                <value name="OID0">
-                  <shadow type="field_oid" id="hn{OMH9y7AP_dns;KO6*">
-                    <field name="oid">javascript.0.meinState</field>
+              <block type="debug" id="DjP1pU?v=))`V;styIRR">
+                <field name="Severity">log</field>
+                <value name="TEXT">
+                  <shadow type="text" id="de?mCXefl4v#XrO])~7y">
+                    <field name="TEXT">test</field>
                   </shadow>
-                </value>
-                <statement name="STATEMENT">
-                  <block type="debug" id="DjP1pU?v=))`V;styIRR">
-                    <field name="Severity">log</field>
-                    <value name="TEXT">
-                      <shadow type="text" id="de?mCXefl4v#XrO])~7y">
-                        <field name="TEXT">test</field>
-                      </shadow>
-                      <block type="text_join" id="^33}.]#ov(vUAEEn8Hdp">
-                        <mutation items="2"></mutation>
-                        <value name="ADD0">
-                          <block type="text" id="_-p%CZq4%)v1EYvh)lf@">
-                            <field name="TEXT">Inhalt von meinState ist </field>
-                          </block>
-                        </value>
-                        <value name="ADD1">
-                          <block type="variables_get" id="6r!TtpfrfQ@5Nf[4#[6l">
-                            <field name="VAR">value</field>
-                          </block>
-                        </value>
+                  <block type="text_join" id="^33}.]#ov(vUAEEn8Hdp">
+                    <mutation items="2"></mutation>
+                    <value name="ADD0">
+                      <block type="text" id="_-p%CZq4%)v1EYvh)lf@">
+                        <field name="TEXT">Value of my state is </field>
+                      </block>
+                    </value>
+                    <value name="ADD1">
+                      <block type="variables_get" id="6r!TtpfrfQ@5Nf[4#[6l">
+                        <field name="VAR">value</field>
                       </block>
                     </value>
                   </block>
-                </statement>
+                </value>
               </block>
             </statement>
           </block>
-        </next>
+        </statement>
       </block>
     </next>
   </block>
 </xml>
 ```
 
-Man kann den neu erzeugten State bereits in dem Block selber nutzen. 
+You can start to use the new created state first in the block itself. 
 
-Der folgende Code gibt bei der ersten Ausführung einen Fehler aus, weil'subscribe' für "myState" das Objekt nicht finden kann:
+Following code will report an error by the first execution, because subscribe for "myState" cannot find object:
  
-![Create state](img/system_create_sample2_de.png)
+![Create state](img/system_create_sample2_en.png)
 
-Bei der zweiten Ausführung wird keine Fehler ausgegeben, weil der Datenpunkt jetzt existiert.
+Although no warning will be printed by the second execution, because the state yet exists.
 
-&nbsp;
-### Wert von Objekt ID
+### Get value of state
 ![Get value of state](img/system_get_value_en.png)
 
-Dieser Block dient dazu den Wert eines Datenpunktes auszulesen. Folgende Attribute des Datenpunktes können ausgelesen werden:
-- Wert
-- Acknowledge - Befehl = falsch oder update = wahr
-- Timestamp in ms seit dem 01.01.1970 (Hat den Typ "Datumsobjekt")
-- Letzte Änderung des Wertes in ms seit dem 01.01.1970 (Hat den Typ "Datumsobjekt")
-- Qualität
-- Quelle - Name der Instanz, die den letzten Wert geschrieben hat, wie z.B. "system.adapter.javascript.0"
+You can use this block to get the value of state. Additionally to value you can get following attributes:
+- Value
+- Acknowledge - command = false or update = true
+- Timestamp in ms from 1970.1.1 (It has type "Date object")
+- Last change of value in ms from 1970.1.1 (It has type "Date object")
+- Quality
+- Source - instance name, that wrote last value, like "system.adapter.javascript.0"
 
 
-&nbsp;
-Beispiel um die Zeit der letzten Änderung des Wertes auszugeben:
+Example to print time of the last value change:
 
 ![Get value of state](img/system_get_value_sample_en.png)
 
@@ -802,19 +704,14 @@ Beispiel um die Zeit der letzten Änderung des Wertes auszugeben:
 </xml>
 ```
 
-
-&nbsp;
-
-### Objekt ID
+### Get Object ID
 ![Get Object ID](img/system_get_id_en.png)
 
-Dieses ist ein einfacher Hilfsblock um komfortabel die Objekt ID zum triggern des Blocks auszuwählen.
+It is just a help block to comfortable select the object ID for trigger block.
 
-Der ID Auswahldialog wird durch Anklicken von "Objekt ID" geöffnet.
+By clicking on Object ID value the select ID dialog will be opened.
 
-
-&nbsp;
-Typische Anwendung dieses Blocks:
+Typical usage:
 
 ![Get Object ID](img/system_get_id_sample_en.png)
 
@@ -851,33 +748,22 @@ Typische Anwendung dieses Blocks:
 </xml>
 ```
 
+## Actions Blocks
 
-&nbsp;
-
-
-
-&nbsp;
-
-
-## Aktionsblöcke
-
-### Exec - Kommando
+### Exec - execute
 ![Exec - execute](img/action_exec_en.png)
 
-Dieser Block führt das eingegebene Kommando im System aus, so als ob man es auf der Kommandozeile via SSH eingegeben hätte.
+Executes defined command on system. Like someone has written this command in SSH console.
 
-Der Befehl wird mit den rechten des Users ausgeführt unter dem ioBroker gestartet wurde. 
+The command will be executed with permissions of user under which the iobroker was started.
 
-Wenn keine Ausgabe gewünscht ist, kann diese unterdrückt werden:
+If no outputs are required, they can be ignored:
 
 ![Exec - execute](img/action_exec_2_en.png)
 
-Wenn eine Ausgabe erfolgen soll:
+If parsing of outputs must be done:
 
 ![Exec - execute](img/action_exec_1_en.png)
-
-
-&nbsp;
 
 ```
 <xml xmlns="http://www.w3.org/1999/xhtml">
@@ -912,62 +798,45 @@ Wenn eine Ausgabe erfolgen soll:
 </xml>
 ```
 
+By analysing of outputs 3 special variables will be created: 
+- result, consists normal output to the console (e.g. for "ls /opt" it consist "iobroker nodejs")
+- error object if command cannot be executed by javascript module
+- stderr, error output of executed program
 
-&nbsp;
-
-Zur Anlayse der Ausgabe werden 3 besondere Variable erzeugt:
-- Ergebnis, enthält die reguläre Ausgabe auf die Konsole (z.B für den Befehl "ls /opt" lautet die Ausgabe "iobroker nodejs")
-- Fehlerobjekt, wenn der Befehl vom JavaScript Modul nicht ausgeführt werden konnte
-- stderr, die Fehlerausgabe des ausgeführten Programms
-
-Zusätzlich wird die selbe Ausgabe auch im log erscheinen, wenn der loglevel nicht auf 'none' steht.
-
-
-&nbsp;
+Additionally if the log level is not "none", the same command will be sent to log.
 
 ### request URL
 ![request URL](img/action_request_en.png)
 
-Ruft eine URL auf und gibt das Ergebnis zurück.
+Calls URL and give back the result.
 
-
-&nbsp;
-Beispiel:
+Example:
 
 ![request URL](img/action_request_1_en.png)
 
-Zur Anlayse der Ausgabe werden 3 besondere Variable erzeugt:
-- Ergebnis, enthält den body der angeforderten Seite
-- Fehler, enthält eine Fehlerbeschreibung
-- Antwort (nur für Fortgeschrittene), Spezialobjekt vom Typ [http.IncomingMessage](https://nodejs.org/api/http.html#http_class_http_incomingmessage)
+By analysing of outputs 3 special variables will be created: 
+- result, consists body of the requested page
+- error, error description 
+- response (only for experts), special object and has type of [http.IncomingMessage](https://nodejs.org/api/http.html#http_class_http_incomingmessage)
 
-Wenn keine Ausgabe gewünscht ist, kann diese unterdrückt werden. Dazu die Option "mit Ergebnis" abhaken.
+If no outputs are required, they can be ignored. Just unset "with results" option.
 
-
-&nbsp;
-
-
-&nbsp;
-
-## SendTo Blöcke
+## Send to Blocks
 
 ### Send to telegram
 ![Send to telegram](img/sendto_telegram_en.png)
 
-Dieser Block dient dazu eine Nachricht über telegram mit Hilfe des telegram-Adapters zu senden.
+This block is used to send message to telegram client via telegram adapter.
 
-Selbstverständlich muss dafür vorher der telegram-Adapter installiert und konfiguriert werden.
+Of course the telegram adapter must be installed and configured.
 
-Um die Nachricht über eine bestimmte Instanz zu senden, muss die gewünschte Instanz des Adapters (üblicherweise telegram.0) ausgewählt werden, ansonsten wird die Nachricht über alle verfügbaren Instanzen verschickt.
+To send message to some specific instance, you should select the installed adapter instance (Normally telegram.0), elsewise message will be sent to all existing instances.
 
-Das Feld *Meldung* ist zwingend notwendig und der dort enthaltene Text wird exakt so an den Klienten gesendet. 
+Property *message* is mandatory and exactly this text will be sent to client. 
 
 User name ID is optional and this is ID from [telegram](https://core.telegram.org/bots/api#user) (Unique identifier for user or bot).
 
 Additionally if the log level is not "none", the same message will be sent to log.
-
-
-&nbsp;
 
 ### Send to SayIt
 ![Send to SayIt](img/sendto_sayit_en.png)
@@ -985,9 +854,6 @@ You must check the language property. This will be used for text2speech engine.
 Volume is optional (normally from 0 to 100).
 
 Additionally if the log level is not "none", the same message will be sent to log.
-
-
-&nbsp;
 
 ### Send to pushover
 ![Send to pushover](img/sendto_pushover_en.png)
@@ -1011,9 +877,6 @@ All other properties are optional and you can read bout them [here](https://push
 - *sound* - the name of one of the sounds supported by device clients to override the user's default sound choice
 
 Additionally if the log level is not "none", the same message will be sent to log.
-
-
-&nbsp;
 
 ### Send email
 ![Send to email](img/sendto_email_en.png)
@@ -1076,9 +939,6 @@ You can refer to files as ```<img src='cid:file1'/>```. "file1" and "file2" are 
 ```
 
 Additionally if the log level is not "none", the same message will be sent to log.
-
-
-&nbsp;
 
 ### Custom sendTo block
 ![Custom sendTo block](img/sendto_custom_en.png)
@@ -1261,12 +1121,6 @@ sendTo("sql.0", "getHistory", {
 
 If you will start value with "{" it will be interpreted as JSON string. Use double quotes in string.
 
-
-&nbsp;
-
-
-&nbsp;
-
 ## Date and Time blocks
 ### Time comparision
 ![Time comparision](img/datetime_compare_ex_en.png)
@@ -1298,16 +1152,10 @@ Following time formats are valid:
 - hh:mm:ss
 - hh:mm
 
-
-&nbsp;
-
 ### Actual time comparision
 ![Actual time comparision](img/datetime_compare_en.png)
 
 This block is used to compare the day time with actual time. It has the same logic as [Time comparision](#time-comparision), but limits cannot be a blocks and it compares only actual time. (for compatibility with old versions)
-
-
-&nbsp;
 
 ### Get actual time im specific format
 ![Get actual time im specific format](img/datetime_actualtime_en.png)
@@ -1351,9 +1199,6 @@ Following formats are supported:
 - hh:mm:ss - 12:00:00         
 - hh:mm:ss.sss - 12:00:00.000    
 
-
-&nbsp;
-
 ### Get time of astro events for today
 ![Get time of astro events for today](img/datetime_astro_en.png)
 
@@ -1382,12 +1227,6 @@ The return value has type "Date Object", what is just the number of milliseconds
 
 **Note:** to use "astro"-function the "latitude" and "longitude" must be defined in javascript adapter settings.
 
-
-&nbsp;
-
-
-&nbsp;
-
 ## Convert blocks
 Sometimes it is required to convert value into other type. Following blocks allow to convert value into specific types.
 
@@ -1396,56 +1235,35 @@ Sometimes it is required to convert value into other type. Following blocks allo
 
 Convert value to number (float).
 
-
-&nbsp;
-
 ### Convert to boolean
 ![Convert to boolean](img/convert_toboolean_en.png)
 
 Convert value to boolean (true or false).
-
-
-&nbsp;
 
 ### Convert to string
 ![Convert to string](img/convert_tostring_en.png)
 
 Convert value to string.
 
-
-&nbsp;
-
 ### Get type of variable
 ![Get type of variable](img/convert_typeof_en.png)
 
 Get type of value. Type can be: boolean, number, string, object.
-
-
-&nbsp;
 
 ### Convert to date/time object
 ![Convert to date/time object](img/convert_todate_en.png)
 
 Convert value to "Date object". Read [here](#get-actual-time-im-specific-format), what the "Date object" is.
 
-
-&nbsp;
-
 ### Convert date/time object to string
 ![Convert to boolean](img/convert_fromtime_en.png)
 
 Convert "Date object" into string. It has the same format options as [Get actual time im specific format](#get-actual-time-im-specific-format).
 
-
-&nbsp;
-
 ### Convert JSON to object
 ![Convert JSON to object](img/convert_json2object_en.png)
 
 Convert JSON string into javascript object. If an error occurs, the empty object will be returned. (only for experts)
-
-
-&nbsp;
 
 ### Convert object to JSON
 ![Convert object to JSON](img/convert_object2json_en.png)
@@ -1464,12 +1282,6 @@ if not:
 ```
 {"a": 1, "b": 2}
 ```
-
-
-&nbsp;
-
-
-&nbsp;
 
 ## Trigger
 
@@ -1574,16 +1386,10 @@ If only one object ID is used so special variables are available in the statemen
 
 elsewise if more than one object ID is used for trigger, you can access value and old value via [Trigger info](#trigger-info).
 
-
-&nbsp;
-
 ### Trigger on state change
 ![Trigger on state change](img/trigger_trigger_en.png)
 
 This is the same block as "Trigger on states change", but with no possibility to use multiple object IDs for triggering (for versions compatibility).
-
-
-&nbsp;
 
 
 ### Trigger info
@@ -1665,9 +1471,6 @@ Typical usage:
 </block>
 ```
 
-
-&nbsp;
-
 ### Schedule
 ![Schedule](img/trigger_schedule_en.png)
 
@@ -1726,9 +1529,6 @@ But there is a good help for you to build such a rules. By clicking on rule the 
 
 ![Schedule](img/trigger_schedule_1_en.png)
 
-
-&nbsp;
-
 ### Trigger on astro event
 ![Schedule](img/trigger_astro_en.png)
 
@@ -1756,9 +1556,6 @@ Additionally you can set the offset in minutes to astrological event, e.g. to fi
 ![Schedule](img/trigger_astro_1_en.png)
 
 As you can see the offset can be negative too to specify time before astrological events.
-
-
-&nbsp;
 
 ### Named schedule
 ![Schedule](img/trigger_schedule_ex_en.png)
@@ -1839,18 +1636,12 @@ Here is an example of configurable alarm clock:
 </xml>
 ```
 
-
-&nbsp;
-
 ### Clear schedule
 ![Schedule](img/trigger_cron_clear_en.png)
 
 With this function block you can clear named schedule. If you define named one more time without clearing it, the old one will still active.
 
 See an example in [Named schedule](#named-schedule)
-
-
-&nbsp;
 
 ### CRON dialog
 ![Schedule](img/trigger_cron_input_en.png)
@@ -1909,9 +1700,6 @@ Create CRON rule from dialog. This block can be connected with [Named schedule](
 </xml>
 ```
 
-
-&nbsp;
-
 ### CRON rule
 ![Schedule](img/trigger_cron_rule_en.png)
 
@@ -1926,12 +1714,6 @@ With additional parameter "with seconds" you can specify seconds for CRON rule t
 ![Schedule](img/trigger_cron_rule_2_en.png)
 
 This block can be used (like [CRON dialog](#cron-dialog)) only with [Named schedule](#named-schedule) block.
-
-
-&nbsp;
-
-
-&nbsp;
 
 ## Timeouts
 
@@ -1975,9 +1757,6 @@ Every delayed execution can have unique name. It can be canceled by other block.
   </block>
 </xml>
 ```
-
-
-&nbsp;
 
 ### Clear delayed execution
 ![Clear delayed execution](img/timeouts_timeout_clear_en.png)
@@ -2086,9 +1865,6 @@ By first motion the light should go on and after the last motion after 30 second
 </xml>
 ```
 
-
-&nbsp;
-
 ### Execution by interval
 ![Execution by interval](img/timeouts_interval_en.png)
 
@@ -2099,19 +1875,10 @@ If you set the interval too small (under 100ms) it can be, that intervals will b
 
 Similar to timeout block you can set unique interval name too.
 
-
-&nbsp;
-
 ### Stop execution by interval
 ![Stop execution by interval](img/timeouts_interval_clear_en.png)
 
 With the help of this block you can cancel periodically execution of interval block by its name.
-
-
-&nbsp;
-
-
-&nbsp;
 
 ## Logic
 
@@ -2129,12 +1896,6 @@ With the help of this block you can cancel periodically execution of interval bl
 
 ### Test block
 
-
-&nbsp;
-
-
-&nbsp;
-
 ## Loops
 
 ### Repeat N times
@@ -2146,12 +1907,6 @@ With the help of this block you can cancel periodically execution of interval bl
 ### For each
 
 ### Break out of loop
-
-
-&nbsp;
-
-
-&nbsp;
 
 ## Math
 
@@ -2181,12 +1936,6 @@ With the help of this block you can cancel periodically execution of interval bl
 
 ### Random value between min and max
 
-
-&nbsp;
-
-
-&nbsp;
-
 ## Text
 
 ### String value
@@ -2208,12 +1957,6 @@ With the help of this block you can cancel periodically execution of interval bl
 ### Convert to upper case or to lower case
 
 ### Trim string
-
-
-&nbsp;
-
-
-&nbsp;
 
 ## Lists
 
@@ -2237,12 +1980,6 @@ With the help of this block you can cancel periodically execution of interval bl
 
 ### Convert text to list and vice versa
 
-
-&nbsp;
-
-
-&nbsp;
-
 ## Colour
 
 ### Colour value
@@ -2252,12 +1989,6 @@ With the help of this block you can cancel periodically execution of interval bl
 ### RGB colour
 
 ### Mix colours
-
-
-&nbsp;
-
-
-&nbsp;
 
 ## Variables
 
@@ -2293,9 +2024,6 @@ var item;
 item = 0;
 ```
 
-
-&nbsp;
-
 ### Get variable's value
 ![Get variable's value](img/variables_get_en.png)
 
@@ -2308,22 +2036,584 @@ Inside these blocks variable "value" yet exist, but anyway to read their values 
 
 ![Get variable's value](img/variables_get_2_en.png)
 
-
-&nbsp;
-
-
-&nbsp;
-
 ## Functions
 
 ### Create function from blocks with no return value
+![Create function from blocks with no return value](img/functions_function_en.png)
+
+With this block you can combine some repeat sequences into function and than use this function everywhere in current blockly.
+
+Here is an example of function that just prints into log current time.
+
+![Create function from blocks with no return value](img/functions_function_2_en.png)
+
+```
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <block type="comment" id=";LE@QUg[hpGG!Ed6(?Hf" x="463" y="88">
+    <field name="COMMENT">Print current time</field>
+  </block>
+  <block type="procedures_defnoreturn" id="zz#oL]VPR)s}NMK9htHa" x="463" y="113">
+    <field name="NAME">printTime</field>
+    <comment pinned="false" h="80" w="160">Describe this function...</comment>
+    <statement name="STACK">
+      <block type="debug" id="ak(`[aJB-AH@Hvc;B,[D">
+        <field name="Severity">log</field>
+        <value name="TEXT">
+          <shadow type="text" id="aGuA=^(ge/)=lXes9f]?">
+            <field name="TEXT">test</field>
+          </shadow>
+          <block type="time_get" id="M}z9(p(melE7BbTGqczO">
+            <mutation format="false" language="false"></mutation>
+            <field name="OPTION">hh:mm:ss.sss</field>
+          </block>
+        </value>
+      </block>
+    </statement>
+  </block>
+</xml>
+```
+
+After the function created, you can use this function like this:
+
+![Create function from blocks with no return value](img/functions_function_3_en.png)
+
+```
+<block xmlns="http://www.w3.org/1999/xhtml" type="timeouts_setinterval" id="hp;?}l3uStXhm+a2s!9t" x="62.99999999999943" y="112.99999999999994">
+  <field name="NAME">interval</field>
+  <field name="INTERVAL">1000</field>
+  <statement name="STATEMENT">
+    <block type="procedures_callnoreturn" id="(/)MPv+z_|516CuG%[XD">
+      <mutation name="printTime"></mutation>
+    </block>
+  </statement>
+</block>
+```
+
+You can find this new function in the blocks menu:
+
+![Create function from blocks with no return value](img/functions_function_4_en.png)
+
+Additionally you can specify arguments for the function too via configuration dialog. You can edit the names of arguments in hte same dialog.
+
+![Create function from blocks with no return value](img/functions_function_1_en.png)
+
+Here is an example of function that prints the sum of first argument and the second one:
+
+![Create function from blocks with no return value](img/functions_function_5_en.png)
+
+```
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <block type="comment" id=";LE@QUg[hpGG!Ed6(?Hf" x="463" y="88">
+    <field name="COMMENT">Print sum of a and b</field>
+  </block>
+  <block type="procedures_defnoreturn" id="zz#oL]VPR)s}NMK9htHa" x="463" y="113">
+    <mutation>
+      <arg name="a"></arg>
+      <arg name="b"></arg>
+    </mutation>
+    <field name="NAME">printSum</field>
+    <comment pinned="false" h="80" w="160">Describe this function...</comment>
+    <statement name="STACK">
+      <block type="debug" id="ak(`[aJB-AH@Hvc;B,[D">
+        <field name="Severity">log</field>
+        <value name="TEXT">
+          <shadow type="text" id="aGuA=^(ge/)=lXes9f]?">
+            <field name="TEXT">test</field>
+          </shadow>
+          <block type="math_arithmetic" id="qUGc!b+U]:yE!I+3I+Lp">
+            <field name="OP">ADD</field>
+            <value name="A">
+              <shadow type="math_number" id="OqjQ{@*pgO,~Xd(ef)9~">
+                <field name="NUM">1</field>
+              </shadow>
+              <block type="variables_get" id="]dC)!=A3{(5?9hJ:1gET">
+                <field name="VAR">a</field>
+              </block>
+            </value>
+            <value name="B">
+              <shadow type="math_number" id="aDp|:rn#.wve0]WKi(D[">
+                <field name="NUM">1</field>
+              </shadow>
+              <block type="variables_get" id="5];ao,?ce{;GJ;OOW~S4">
+                <field name="VAR">b</field>
+              </block>
+            </value>
+          </block>
+        </value>
+      </block>
+    </statement>
+  </block>
+</xml>
+```
+
+You can find the arguments in the variables menu:
+
+![Create function from blocks with no return value](img/functions_function_6_en.png)
+
+And use this function like this:
+
+![Create function from blocks with no return value](img/functions_function_7_en.png)
+
+```
+<block xmlns="http://www.w3.org/1999/xhtml" type="procedures_callnoreturn" id="(-G|y+Y7AC]w2CTQGjYC" x="138" y="188">
+  <mutation name="printSum">
+    <arg name="a"></arg>
+    <arg name="b"></arg>
+  </mutation>
+  <value name="ARG0">
+    <block type="math_number" id="!.UT=[{Xkz-*wlPh)sYn">
+      <field name="NUM">5</field>
+    </block>
+  </value>
+  <value name="ARG1">
+    <block type="math_number" id="EMhKM9Cn#;DjMZ#Ko%EN">
+      <field name="NUM">6</field>
+    </block>
+  </value>
+</block>
+```
 
 ### Create function from blocks with return value
+![Create function from blocks with return value](img/functions_function_ret_en.png)
+
+This block is the same, but it can return result of the function, that can be used later in blocks.
+
+![Create function from blocks with return value](img/functions_function_ret_2_en.png)
+
+```
+<block xmlns="http://www.w3.org/1999/xhtml" type="procedures_defreturn" id="4)|}1YzV}e6YUvVV^sY{" x="413" y="138">
+  <mutation statements="false">
+    <arg name="a"></arg>
+    <arg name="b"></arg>
+  </mutation>
+  <field name="NAME">do something</field>
+  <comment pinned="false" h="80" w="160">Return sum of a and b</comment>
+  <value name="RETURN">
+    <block type="math_arithmetic" id="qUGc!b+U]:yE!I+3I+Lp">
+      <field name="OP">ADD</field>
+      <value name="A">
+        <shadow type="math_number" id="OqjQ{@*pgO,~Xd(ef)9~">
+          <field name="NUM">1</field>
+        </shadow>
+        <block type="variables_get" id="]dC)!=A3{(5?9hJ:1gET">
+          <field name="VAR">a</field>
+        </block>
+      </value>
+      <value name="B">
+        <shadow type="math_number" id="aDp|:rn#.wve0]WKi(D[">
+          <field name="NUM">1</field>
+        </shadow>
+        <block type="variables_get" id="5];ao,?ce{;GJ;OOW~S4">
+          <field name="VAR">b</field>
+        </block>
+      </value>
+    </block>
+  </value>
+</block>
+```
+
+Usage is similar with other function blocks:
+
+![Create function from blocks with return value](img/functions_function_ret_3_en.png)
+
+```
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <block type="debug" id="zgr7b0g)}uMe1ySGYL7X" x="163" y="137">
+    <field name="Severity">log</field>
+    <value name="TEXT">
+      <shadow type="text" id="q-]m1ptAzK4Rq20wWRBq">
+        <field name="TEXT">test</field>
+      </shadow>
+      <block type="procedures_callreturn" id="0RX?V1j|FZHK@*Lw3W-g">
+        <mutation name="sum">
+          <arg name="a"></arg>
+          <arg name="b"></arg>
+        </mutation>
+        <value name="ARG0">
+          <block type="math_number" id="Xd52^_Qp83=ah2RTWzSU">
+            <field name="NUM">5</field>
+          </block>
+        </value>
+        <value name="ARG1">
+          <block type="math_number" id="-M9A9EhrgJSRc*4(X^[;">
+            <field name="NUM">6</field>
+          </block>
+        </value>
+      </block>
+    </value>
+  </block>
+  <block type="procedures_defreturn" id="4)|}1YzV}e6YUvVV^sY{" x="413" y="138">
+    <mutation statements="false">
+      <arg name="a"></arg>
+      <arg name="b"></arg>
+    </mutation>
+    <field name="NAME">sum</field>
+    <comment pinned="false" h="80" w="160">Return sum of a and b</comment>
+    <value name="RETURN">
+      <block type="math_arithmetic" id="qUGc!b+U]:yE!I+3I+Lp">
+        <field name="OP">ADD</field>
+        <value name="A">
+          <shadow type="math_number" id="OqjQ{@*pgO,~Xd(ef)9~">
+            <field name="NUM">1</field>
+          </shadow>
+          <block type="variables_get" id="]dC)!=A3{(5?9hJ:1gET">
+            <field name="VAR">a</field>
+          </block>
+        </value>
+        <value name="B">
+          <shadow type="math_number" id="aDp|:rn#.wve0]WKi(D[">
+            <field name="NUM">1</field>
+          </shadow>
+          <block type="variables_get" id="5];ao,?ce{;GJ;OOW~S4">
+            <field name="VAR">b</field>
+          </block>
+        </value>
+      </block>
+    </value>
+  </block>
+</xml>
+```
+
+For all functions you can add comment or description. 
+
+![Create function from blocks with return value](img/functions_function_ret_1_en.png)
+
+In the return block you can use special return element:
+
+![Create function from blocks with return value](img/functions_function_ret_4_en.png)
+
+![Create function from blocks with return value](img/functions_function_ret_5_en.png)
+
+```
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <block type="debug" id="zgr7b0g)}uMe1ySGYL7X" x="63" y="12">
+    <field name="Severity">log</field>
+    <value name="TEXT">
+      <shadow type="text" id="q-]m1ptAzK4Rq20wWRBq">
+        <field name="TEXT">test</field>
+      </shadow>
+      <block type="procedures_callreturn" id="0RX?V1j|FZHK@*Lw3W-g">
+        <mutation name="numberToDay">
+          <arg name="day"></arg>
+        </mutation>
+        <value name="ARG0">
+          <block type="math_number" id="Xd52^_Qp83=ah2RTWzSU">
+            <field name="NUM">5</field>
+          </block>
+        </value>
+      </block>
+    </value>
+  </block>
+  <block type="debug" id="@i@bdG^90dp,cJ#W*[nB" x="12" y="188">
+    <field name="Severity">log</field>
+    <value name="TEXT">
+      <shadow type="text" id="8:/`}T!:6Wz.d/;)jpHl">
+        <field name="TEXT">test</field>
+      </shadow>
+      <block type="procedures_callreturn" id="hvzS!O_Q=FlccQR@*%tk">
+        <mutation name="numberToDay">
+          <arg name="day"></arg>
+        </mutation>
+        <value name="ARG0">
+          <block type="time_get" id=":A,Ba,yrW_QgiX*cs9zh">
+            <mutation format="false" language="false"></mutation>
+            <field name="OPTION">wd</field>
+          </block>
+        </value>
+      </block>
+    </value>
+  </block>
+  <block type="procedures_defreturn" id="4)|}1YzV}e6YUvVV^sY{" x="588" y="163">
+    <mutation>
+      <arg name="day"></arg>
+    </mutation>
+    <field name="NAME">numberToDay</field>
+    <comment pinned="false" h="80" w="160">Return sum of a and b</comment>
+    <statement name="STACK">
+      <block type="procedures_ifreturn" id="/qJjm#cr-naS}joAL0eT">
+        <mutation value="1"></mutation>
+        <value name="CONDITION">
+          <block type="logic_compare" id="cbxuAYxF,ptMi.`E/nB.">
+            <field name="OP">EQ</field>
+            <value name="A">
+              <block type="variables_get" id="`mWQWp).?qDuD=)NX2dA">
+                <field name="VAR">day</field>
+              </block>
+            </value>
+            <value name="B">
+              <block type="math_number" id="s,20+9X6bB/2nL{v?g:/">
+                <field name="NUM">0</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <value name="VALUE">
+          <block type="text" id="iI)V7P`3YP]{-S-7HcO1">
+            <field name="TEXT">Sunday</field>
+          </block>
+        </value>
+        <next>
+          <block type="procedures_ifreturn" id="3=FBSCS{jzu[}2L5Spi[">
+            <mutation value="1"></mutation>
+            <value name="CONDITION">
+              <block type="logic_compare" id="V[;S84AH5cf93^5/[AN^">
+                <field name="OP">EQ</field>
+                <value name="A">
+                  <block type="variables_get" id=";ShgVu*+:nn9WSzbm[fA">
+                    <field name="VAR">day</field>
+                  </block>
+                </value>
+                <value name="B">
+                  <block type="math_number" id="jY?Wj8lC1-~SiIHa*I)0">
+                    <field name="NUM">1</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <value name="VALUE">
+              <block type="text" id="=aVg_FatldZUUsS(8G`;">
+                <field name="TEXT">Monday</field>
+              </block>
+            </value>
+            <next>
+              <block type="procedures_ifreturn" id="(g_VE2e?U^J-nhk,bP|0">
+                <mutation value="1"></mutation>
+                <value name="CONDITION">
+                  <block type="logic_compare" id="M;B+SSw[Mc.iu;fUjvcV">
+                    <field name="OP">EQ</field>
+                    <value name="A">
+                      <block type="variables_get" id="yT{.UQ)qXY8-@2XzpxQo">
+                        <field name="VAR">day</field>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <block type="math_number" id="Q-JC5_JZ=i{[+~:^|BpU">
+                        <field name="NUM">2</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <value name="VALUE">
+                  <block type="text" id="9`665+j*i_?3BCZWODGt">
+                    <field name="TEXT">Tuesday</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="procedures_ifreturn" id="{+9IT6E:N-a+Y.cFNMsw">
+                    <mutation value="1"></mutation>
+                    <value name="CONDITION">
+                      <block type="logic_compare" id="B}D{JSK|}=bk|-|D#/_h">
+                        <field name="OP">EQ</field>
+                        <value name="A">
+                          <block type="variables_get" id="s{Zxm|sBbEGA1#~Tv3EE">
+                            <field name="VAR">day</field>
+                          </block>
+                        </value>
+                        <value name="B">
+                          <block type="math_number" id="f!3KoyGu4bWpxdaJY`JI">
+                            <field name="NUM">3</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <value name="VALUE">
+                      <block type="text" id="yS4pn;Fdg9JT[MjvPu,4">
+                        <field name="TEXT">Wednesday</field>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="procedures_ifreturn" id="g*VMz;jyw4,@;Qb*/8TN">
+                        <mutation value="1"></mutation>
+                        <value name="CONDITION">
+                          <block type="logic_compare" id="(^azMqi{:`?S.tJ@y7-m">
+                            <field name="OP">EQ</field>
+                            <value name="A">
+                              <block type="variables_get" id="P*CAI!ug.Xl*BM2v/kpb">
+                                <field name="VAR">day</field>
+                              </block>
+                            </value>
+                            <value name="B">
+                              <block type="math_number" id="YN@VzF~X=BOcWm+P]c3i">
+                                <field name="NUM">4</field>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                        <value name="VALUE">
+                          <block type="text" id="H`yzv!j_GjSw|@f7Gap8">
+                            <field name="TEXT">Thursday</field>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="procedures_ifreturn" id=")htNPjBWw1J/gp-Y5#Kg">
+                            <mutation value="1"></mutation>
+                            <value name="CONDITION">
+                              <block type="logic_compare" id="nFZ;s`3ij0v|.wQqw`AB">
+                                <field name="OP">EQ</field>
+                                <value name="A">
+                                  <block type="variables_get" id="Q^3OKKD]aGa0/qxWf%*g">
+                                    <field name="VAR">day</field>
+                                  </block>
+                                </value>
+                                <value name="B">
+                                  <block type="math_number" id="#brnWNXj0_dx[JwHjgh0">
+                                    <field name="NUM">5</field>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                            <value name="VALUE">
+                              <block type="text" id="Y1-{3UJxFrpq{uJp6DkB">
+                                <field name="TEXT">Friday</field>
+                              </block>
+                            </value>
+                            <next>
+                              <block type="procedures_ifreturn" id="K2~CLXTJ5b=T+=/6%m=~">
+                                <mutation value="1"></mutation>
+                                <value name="CONDITION">
+                                  <block type="logic_compare" id="Cjh^D.y[m3YQn},sC1(0">
+                                    <field name="OP">EQ</field>
+                                    <value name="A">
+                                      <block type="variables_get" id="|uXT]6-.XcdAG-6HtffC">
+                                        <field name="VAR">day</field>
+                                      </block>
+                                    </value>
+                                    <value name="B">
+                                      <block type="math_number" id="N@!AqGy7OCz9:zhv@f?K">
+                                        <field name="NUM">6</field>
+                                      </block>
+                                    </value>
+                                  </block>
+                                </value>
+                                <value name="VALUE">
+                                  <block type="text" id="omKlSmgS{[5T:v{9(j}?">
+                                    <field name="TEXT">Saturday</field>
+                                  </block>
+                                </value>
+                                <next>
+                                  <block type="procedures_ifreturn" id=".XFx#9RZIGl!joSiMNyq">
+                                    <mutation value="1"></mutation>
+                                    <value name="CONDITION">
+                                      <block type="logic_compare" id="aqkbbBOzUTv/%JlX)V}S">
+                                        <field name="OP">EQ</field>
+                                        <value name="A">
+                                          <block type="variables_get" id="qrl+C-GvBF7QzLz8?@:u">
+                                            <field name="VAR">day</field>
+                                          </block>
+                                        </value>
+                                        <value name="B">
+                                          <block type="math_number" id="_[;I?)){=vm_jnSYHumL">
+                                            <field name="NUM">7</field>
+                                          </block>
+                                        </value>
+                                      </block>
+                                    </value>
+                                    <value name="VALUE">
+                                      <block type="text" id="MCTQyN!}ig#3~)B[r#q[">
+                                        <field name="TEXT">Sunday</field>
+                                      </block>
+                                    </value>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+    <value name="RETURN">
+      <block type="text" id="revjgT`{%j^1mn*-SJ1a">
+        <field name="TEXT">Invalid day</field>
+      </block>
+    </value>
+  </block>
+</xml>
+```
 
 ### Return value in function 
+![Return value in function](img/functions_return_en.png)
+
+See usage of this block in [Create function from blocks with return value](#create-function-from-blocks-with-return-value]).
+
+This block can be used only there and serves to return value in the middle of the function.
 
 ### Create custom function with no return value
+![Create custom function with no return value](img/functions_function_ex_en.png)
+
+Sometimes existing blocks are not suitable to solve specific problem. With this block you can create your own block as a function, that can accept parameters and do some action.
+To write such a function you must know javascript. You can use inside all functions, that were created for pure scripting.
+
+To write the code you must click the '...' at the ond the block and the editor dialog will be opened.
+
+![Create custom function with no return value](img/functions_function_ex_1_en.png)
+
+Otherwise the usage of this block is similar with standard function blocks, like [Create function from blocks with return value](#create-function-from-blocks-with-return-value]) or [Create function from blocks with no return value](#create-function-from-blocks-with-no-return-value]).
 
 ### Create custom function with return value
+![Create custom function with return value](img/functions_function_ex_ret_en.png)
+
+This custom function block can return values. To return result from function write 
+
+```
+return 'your result';
+```
+
+Like here:
+
+![Create custom function with return value](img/functions_function_ex_ret_1_en.png)
+
+```
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <block type="procedures_defcustomreturn" id="mG^pXm=MO7vPl!c^/.Px" x="163" y="63">
+    <mutation statements="false">
+      <arg name="a"></arg>
+      <arg name="b"></arg>
+    </mutation>
+    <field name="NAME">sum</field>
+    <field name="SCRIPT">cmV0dXJuIGEgKyBiOw==</field>
+    <comment pinned="false" h="80" w="160">Summarise a and b</comment>
+  </block>
+  <block type="debug" id="U6pI-lE0VS#G):ELrQ(0" x="163" y="138">
+    <field name="Severity">log</field>
+    <value name="TEXT">
+      <shadow type="text" id="PBg^5*vuC?Isr)]pqx/u">
+        <field name="TEXT">test</field>
+      </shadow>
+      <block type="procedures_callcustomreturn" id="XuhUUF65jRZGB#YE(GTC">
+        <mutation name="sum">
+          <arg name="a"></arg>
+          <arg name="b"></arg>
+        </mutation>
+        <value name="ARG0">
+          <block type="math_number" id="h_[^zH{ILtnHrsxY0j~z">
+            <field name="NUM">5</field>
+          </block>
+        </value>
+        <value name="ARG1">
+          <block type="math_number" id="iIoph|b.?suX;)R=d|),">
+            <field name="NUM">6</field>
+          </block>
+        </value>
+      </block>
+    </value>
+  </block>
+</xml>
+```
 
 ### Call function
+![Call function](img/functions_call_ex_en.png)
+
+![Call function](img/functions_call_ex_ret_en.png)
+
+For every created function in the menu appears additional block with the name of this function. 
+
+You can use it like normal blocks in you scripts.
+

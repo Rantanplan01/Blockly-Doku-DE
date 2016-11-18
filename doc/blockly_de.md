@@ -11,10 +11,10 @@
         - [Kommentar](#kommentar)
         - [Steuere State](#steuere-state)
         - [Aktualisiere State](#aktualisiere-state)
-        - [Binde States](#binde-states)
-        - [Schreibe States](#schreibe-states)
-        - [Erzeuge State](#erzeuge-state)
-        - [Wert von Objekt ID](#wert-von-objekt-id)
+        - [Bind states](#bind-states)
+        - [Write states](#write-states)
+        - [Create state](#create-state)
+        - [Get value of state](#get-value-of-state)
         - [Get Object ID](#get-object-id)
     - [Aktionsblöcke](#aktionsblöcke)
         - [Exec - Kommando](#exec---kommando)
@@ -255,7 +255,6 @@ Beispiel zum importieren:
     </next>
   </block>
 </xml>
-
 ```
 
 
@@ -420,11 +419,11 @@ Beispiel zum importieren:
 ## Systemblöcke
 
 ### Debug Ausgabe
-![Debug output](img/system_debug_de.png)
+![Debug output](img/system_debug_en.png)
 
 Dieser Block macht nichts, außer eine Zeile ins log zu schreiben. Man kann ihn zum debuggen des Scripts nutzen, wie diesen hier:
 
-![Debug output](img/system_debug_1_de.png)
+![Debug output](img/system_debug_1_en.png)
 
 
 &nbsp;
@@ -432,8 +431,8 @@ Beispiel zum importieren:
 
 ```
 <xml xmlns="http://www.w3.org/1999/xhtml">
-  <block type="comment" id="L5(wd?ar.Q;05Q}x{;I{" x="63" y="63">
-    <field name="COMMENT">Scheibt jede Sekunde die aktuelle Zeit in das Log </field>
+  <block type="comment" id="K|2AnJ|5})RoNZ1T%Hh#" x="38" y="13">
+    <field name="COMMENT">Print time into log every second</field>
     <next>
       <block type="timeouts_setinterval" id="LNsHTl,!r6eR8J9Yg,Xn">
         <field name="NAME">interval</field>
@@ -595,7 +594,7 @@ Typische Anwendung dieses Blocks:
 
 
 &nbsp;
-### Binde States
+### Bind States
 ![Bind state](img/system_bind_de.png)
 
 Dieser Block bindet zwei Zustände aneinander.
@@ -657,8 +656,8 @@ Beispiel zum importieren:
 ```
 
 
-&nbsp;
-### Schreibe States
+
+### Write states
 ![Write state](img/system_write_de.png)
 
 Dies ist ein universeller Block zum schreiben von Zuständen, indem er das slebe macht, wie ["Aktualisiere State"](#aktualisiere-state) and ["Steuere State"](#steuere-state) zusammen. 
@@ -666,7 +665,7 @@ Dies ist ein universeller Block zum schreiben von Zuständen, indem er das slebe
 Aber im Vergleich dazu kann man die Objekt ID und die Verzögerung über andere Blöcke definieren um das Skript universeller zu gestalten.
 
 
-&nbsp;
+
 ### Erzeuge State
 ![Create state](img/system_create_de.png)
 

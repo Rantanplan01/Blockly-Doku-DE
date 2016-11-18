@@ -12,6 +12,9 @@ Executes Javascript and Coffescript Scripts.
 
 Here you can find description of [blockly](doc/blockly_en.md).
 
+Hier kann man die Beschreibung von [Blockly](doc/blockly_de.md) finden.
+
+
 ## Content
 - [Note](#note)
 - [Global functions](#global-functions)
@@ -58,6 +61,7 @@ Here you can find description of [blockly](doc/blockly_en.md).
     - [$ - Selector](#---selector)
     - [readFile](#readfile)
     - [writeFile](#writefile)
+    - [delFile](#delFile)
     - [onStop](#onstop)
     - [getHistory](#gethistory)
     - [runScript](#runscript)
@@ -104,7 +108,7 @@ http.request('www.google.com', cb(function(res) {
 to be sure, that no callback will be called if script is deleted or modified.
 
 ## Global functions
-You can define the global scripts with suffux name "_global", like "MyGlobalFunctions_global".
+You can define the global scripts in the "global" folder.
 All global scripts are available on all instances. If global script is disabled, it will not be used.
 Global script will be just prepend to the normal script and compiled, so you cannot share data between scripts via global scrips. Use states for it.
 
@@ -225,13 +229,13 @@ You can use following parameters to specify the trigger:
 |             | RegExp     |       name matched to regular expression                                                               |
 |             |            |                                                                                                        |
 | change      | string     |       "eq", "ne", "gt", "ge", "lt", "le", "any"                                                        |
-|             |   "eq"     |       (equal)            New value must be equal to old one (state.val == oldState.val)             |
+|             |   "eq"     |       (equal)            New value must be equal to old one (state.val == oldState.val)                |
 |             |   "ne"     |       (not equal)        New value must be not equal to the old one (state.val != oldState.val) **If pattern is id-string this value is used by default**    |
-|             |   "gt"     |       (greater)          New value must be greater than old value (state.val > oldState.val)        |
-|             |   "ge"     |       (greater or equal) New value must be greater or equal to old one (state.val >= oldState.val)  |
-|             |   "lt"     |       (smaller)          New value must be smaller than old one (state.val < oldState.val)          |
-|             |   "le"     |       (smaller or equal) New value must be smaller or equal to old value (state.val <= oldState.val)|
-|             |  "any"     |       Trigger will be raised if just the new value comes                                                |
+|             |   "gt"     |       (greater)          New value must be greater than old value (state.val > oldState.val)           |
+|             |   "ge"     |       (greater or equal) New value must be greater or equal to old one (state.val >= oldState.val)     |
+|             |   "lt"     |       (smaller)          New value must be smaller than old one (state.val < oldState.val)             |
+|             |   "le"     |       (smaller or equal) New value must be smaller or equal to old value (state.val <= oldState.val)   |
+|             |  "any"     |       Trigger will be raised if just the new value comes                                               |
 |             |            |                                                                                                        |
 | val         | mixed      |       New value must be equal to given one                                                             |
 | valNe       | mixed      |       New value must be not equal to given one                                                         |
@@ -251,11 +255,11 @@ You can use following parameters to specify the trigger:
 |             |            |                                                                                                        |
 | oldAck      | bool       |       Acknowledged state of previous value is equal to given one                                       |
 |             |            |                                                                                                        |
-| ts          | string     |       New value time stamp must be equal to given one (state.ts == ts)                              |
-| tsGt        | string     |       New value time stamp must be not equal to the given one (state.ts != ts)                      |
-| tsGe        | string     |       New value time stamp must be greater than given value (state.ts > ts)                         |
-| tsLt        | string     |       New value time stamp must be greater or equal to given one (state.ts >= ts)                   |
-| tsLe        | string     |       New value time stamp must be smaller than given one (state.ts < ts)                           |
+| ts          | string     |       New value time stamp must be equal to given one (state.ts == ts)                                 |
+| tsGt        | string     |       New value time stamp must be not equal to the given one (state.ts != ts)                         |
+| tsGe        | string     |       New value time stamp must be greater than given value (state.ts > ts)                            |
+| tsLt        | string     |       New value time stamp must be greater or equal to given one (state.ts >= ts)                      |
+| tsLe        | string     |       New value time stamp must be smaller than given one (state.ts < ts)                              |
 |             |            |                                                                                                        |
 | oldTs       | string     |       Previous time stamp must be equal to given one (oldState.ts == ts)                               |
 | oldTsGt     | string     |       Previous time stamp must be not equal to the given one (oldState.ts != ts)                       |
@@ -263,11 +267,11 @@ You can use following parameters to specify the trigger:
 | oldTsLt     | string     |       Previous time stamp must be greater or equal to given one (oldState.ts >= ts)                    |
 | oldTsLe     | string     |       Previous time stamp must be smaller than given one (oldState.ts < ts)                            |
 |             |            |                                                                                                        |
-| lc          | string     |       Last change time stamp must be equal to given one (state.lc == lc)                            |
-| lcGt        | string     |       Last change time stamp must be not equal to the given one (state.lc != lc)                    |
-| lcGe        | string     |       Last change time stamp must be greater than given value (state.lc > lc)                       |
-| lcLt        | string     |       Last change time stamp must be greater or equal to given one (state.lc >= lc)                 |
-| lcLe        | string     |       Last change time stamp must be smaller than given one (state.lc < lc)                         |
+| lc          | string     |       Last change time stamp must be equal to given one (state.lc == lc)                               |
+| lcGt        | string     |       Last change time stamp must be not equal to the given one (state.lc != lc)                       |
+| lcGe        | string     |       Last change time stamp must be greater than given value (state.lc > lc)                          |
+| lcLt        | string     |       Last change time stamp must be greater or equal to given one (state.lc >= lc)                    |
+| lcLe        | string     |       Last change time stamp must be smaller than given one (state.lc < lc)                            |
 |             |            |                                                                                                        |
 | oldLc       | string     |       Previous last change time stamp must be equal to given one (oldState.lc == lc)                   |
 | oldLcGt     | string     |       Previous last change time stamp must be not equal to the given one (oldState.lc != lc)           |
@@ -776,13 +780,13 @@ $('channel[role=switch][state.id=*.STATE](rooms=Wohnzimmer)').each(function (id,
 ```
 
 ### readFile
-    readFile (fileName, function (error, bytes) {})
+    readFile (adapter, fileName, function (error, bytes) {})
     
 The result will be given in callback.
 Read file from DB from folder "javascript".
 
 ### writeFile
-    writeFile (fileName, bytes, function (error) {})
+    writeFile (adapter, fileName, bytes, function (error) {})
 
 The optional error code will be given in callback.
 fileName is the name of file in DB. All files are stored in folder "javascript". if you want to write to other folders, e.g. to "/vis.0/" use setFile for that.
@@ -793,7 +797,7 @@ The file that looks like '/subfolder/file.txt' will be stored under "/javascript
 // store screenshot in DB
 var fs = require('fs');
 var data = fs.readFileSync('/tmp/screenshot.png');
-writeFile('/screenshots/1.png', data, function (error) {
+writeFile(null, '/screenshots/1.png', data, function (error) {
     console.log('file written');
 });
 ```
@@ -806,6 +810,14 @@ writeFile('vis.0', '/screenshots/1.png', data, function (error) {
     console.log('file written');
 });
 ```
+
+### delFile
+    delFile (adapter, fileName, function (error) {})
+    
+Delete file or directory. fileName is the name of file or directory in DB. 
+
+This function is alias for *unlink*.
+
 ### onStop
     onStop (function(){}, timeout);
 Install callback, that will be called if script stopped. Used e.g. to stop communication or to close connections.
@@ -907,12 +919,42 @@ It is not a function. It is a variable with script name, that is visible in scri
 
 It is not a function. It is a variable with javascript instance, that is visible in script's scope.
 
+## Option - "Do not subscribe all states on start"
+There are two modes of subscribe on states:
+- Adapter subscribes on all changes at start and receives all changes of all states (it is easy to use getStates(id), but required more CPU and RAM):
+
+```
+console.log(getState('someID').val);
+```
+
+- Adapter subscribes every time on specified ID if "on/subscribe" called. In this mode the adapter receives only updates for desired states. 
+It is very perform and RAM efficiency, but you cannot access states directly in getState. You must use callback to get the result of state:
+
+```
+getState('someID', function (error, state) {
+    console.log(state.val);
+});
+```
+
+It is because the adapter does not have the value of state in RAM and must ask central DB for the value. 
+
 ## Scripts activity
 
 There is a possibility to enabled and disable scripts via states. For every script the state will be created with name **javascript.INSTANCE.scriptEnabled.SCRIPT_NAME**.
 Scripts can be activated and deactivated by controlling of this state with ack=false.
 
 ## Changelog
+
+### 3.2.0 (2016-11-14)
+* (bluefox) Fix error with of blocks in adapters
+* (bluefox) Support of subscribe for only required states
+* (bluefox) add delFile
+* (bluefox) fix error with names
+
+### 3.1.0 (2016-10-12)
+* (bluefox) Support of blocks in adapters
+* (bluefox) Move sendTo blocks into adapters
+
 ### 3.0.10 (2016-09-30)
 * (bluefox) New blocks: compare time, write state
 * (bluefox) Documentation
